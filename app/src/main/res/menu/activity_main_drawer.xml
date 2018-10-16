@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_entrar"
+            android:icon="@drawable/ic_home"
+            android:title="Entrar" />
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_person"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_pref"
+            android:icon="@drawable/ic_settings"
+            android:title="Preferências" />
+        <item
+            android:id="@+id/nav_list"
+            android:icon="@drawable/ic_list"
+            android:title="Minha Lista" />
+    </group>
+
+    <item android:title="Suporte">
+        <menu>
+            <item
+                android:id="@+id/nav_faq"
+                android:icon="@drawable/ic_help"
+                android:title="FAQ" />
+            <item
+                android:id="@+id/nav_contato"
+                android:icon="@drawable/ic_email"
+                android:title="Contato" />
+        </menu>
+    </item>
+
+</menu>
