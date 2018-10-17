@@ -1,16 +1,20 @@
 package com.ufscar.mobile.hestiaapp
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,6 +34,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        val recyclerView = rvCard as RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        val imoveis = ArrayList<Imovel>()
+        imoveis.add(Imovel("Apartamento", 3, 2, 5,
+                700, 2, 1, 1, 1, "Perto do Centro",
+                "Av São Carlos", null))
+        imoveis.add(Imovel("Republica", 8, 5, 6,
+                400, 4, 2, 2, 2, "No Kartodromo",
+                "Sei la", null))
+        imoveis.add(Imovel("Casa", 4, 2, 5,
+                1000, 2, 2, 1, 1, "Perto do Centro",
+                "Av São Carlos", null))
+
+        val adapter = CardAdapter(imoveis)
+        recyclerView.adapter = adapter
     }
 
     override fun onBackPressed() {

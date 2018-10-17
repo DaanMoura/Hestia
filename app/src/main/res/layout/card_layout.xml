@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginEnd="32dp"
+    android:layout_marginBottom="32dp"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:targetApi="lollipop">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:text="@string/default_card_title"
+            android:textColor="@color/primaryText"
+            android:textSize="24sp"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/tvMoradores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:paddingStart="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/default_card_moradores"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvInteressados"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:text="@string/default_card_interessados"
+            android:textSize="16sp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp" />
+
+        <ImageView
+            android:id="@+id/cardFoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#abc" />
+
+        <TextView
+            android:id="@+id/tvPreco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:text="@string/default_price"
+            android:textColor="@color/primaryText"
+            android:textSize="20sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="8dp" />
+
+        <TextView
+            android:id="@+id/tvComodos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:text="@string/default_comodos"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            android:paddingBottom="4dp"
+            android:paddingStart="8dp" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:text="@string/default_short_description"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            android:paddingBottom="4dp"
+            android:paddingStart="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkInteressados"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:text="@string/tenho_interesse" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
