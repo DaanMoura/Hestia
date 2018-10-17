@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val recyclerView = rvCard as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+
         val imoveis = ArrayList<Imovel>()
         imoveis.add(Imovel("Apartamento", 3, 2, 5,
                 700, 2, 1, 1, 1, "Perto do Centro",
@@ -44,6 +45,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         imoveis.add(Imovel("Republica", 8, 5, 6,
                 400, 4, 2, 2, 2, "No Kartodromo",
                 "Sei la", null))
+        imoveis.add(Imovel("Casa", 4, 2, 5,
+                1000, 2, 2, 1, 1, "Perto do Centro",
+                "Av São Carlos", null))
+
         imoveis.add(Imovel("Casa", 4, 2, 5,
                 1000, 2, 2, 1, 1, "Perto do Centro",
                 "Av São Carlos", null))

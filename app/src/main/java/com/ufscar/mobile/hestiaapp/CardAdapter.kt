@@ -25,6 +25,7 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
         holder.moradores.text = "Moradores: ${imovel.min}/${imovel.max}"
         holder.interessados.text = "Interessados: ${imovel.interessados}"
         holder.foto.setImageBitmap(imovel.bmFoto)
+        holder.preco.text = "R$ ${imovel.preco},00"
         holder.comodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas"
         holder.descricao.text = imovel.descricao
     }
@@ -34,6 +35,7 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
         val moradores = itemView.tvMoradores as TextView
         val interessados = itemView.tvInteressados as TextView
         val foto = itemView.cardFoto as ImageView
+        val preco = itemView.tvPreco as TextView
         val comodos = itemView.tvComodos as TextView
         val descricao = itemView.tvDesc as TextView
         val interessado = itemView.checkInteressados as CheckBox
