@@ -1,4 +1,4 @@
-package com.ufscar.mobile.hestiaapp
+package com.ufscar.mobile.hestiaapp.model
 
 import android.graphics.Bitmap
 

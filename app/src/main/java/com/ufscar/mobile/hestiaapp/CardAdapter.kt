@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import com.ufscar.mobile.hestiaapp.model.Imovel
 import kotlinx.android.synthetic.main.card_layout.view.*
 
 class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {

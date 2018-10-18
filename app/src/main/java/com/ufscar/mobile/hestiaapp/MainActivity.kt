@@ -1,5 +1,7 @@
 package com.ufscar.mobile.hestiaapp
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -12,11 +14,29 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.ErrorCodes
+import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.auth.FirebaseAuth
+import com.ufscar.mobile.hestiaapp.model.Imovel
+import com.ufscar.mobile.hestiaapp.util.FirestoreUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.indeterminateProgressDialog
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    //For Sign in
+    private val RC_SIGN_IN = 1
+
+    private val signInProviders =
+            listOf(AuthUI.IdpConfig.EmailBuilder()
+                    .setAllowNewAccounts(true)
+                    .setRequireName(true)
+                    .build())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +75,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val adapter = CardAdapter(imoveis)
         recyclerView.adapter = adapter
+
+        //TODO: mudar nome e email na navigation drawer
     }
 
     override fun onBackPressed() {
@@ -85,10 +107,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_entrar -> {
-                Toast.makeText(this, "Entrar", Toast.LENGTH_SHORT).show()
+                if (FirebaseAuth.getInstance().currentUser == null) {
+                    val intent = AuthUI.getInstance().createSignInIntentBuilder()
+                            .setAvailableProviders(signInProviders)
+                            .setLogo(R.drawable.ic_home) // TODO: Change this later
+                            .build()
+                    startActivityForResult(intent, RC_SIGN_IN)
+                } else {
+                    Toast.makeText(this, "Já conectado", Toast.LENGTH_SHORT).show() // TODO: Substituir por logout
+                }
             }
             R.id.nav_perfil -> {
-                Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
+                startActivity(intentFor<PerfilActivity>())
             }
             R.id.nav_pref -> {
                 Toast.makeText(this, "Preferências", Toast.LENGTH_SHORT).show()
@@ -106,5 +136,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val response = IdpResponse.fromResultIntent(data)
+
+            if (resultCode == Activity.RESULT_OK) {
+                val progressDialog = indeterminateProgressDialog("Configurando sua conta")
+
+                FirestoreUtil.initCurrentUserIfFirstTime {
+                    startActivity(intentFor<MainActivity>().newTask().clearTask())
+                    progressDialog.dismiss()
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                if (response == null) return
+
+                when (response.error?.errorCode) {
+                    ErrorCodes.NO_NETWORK ->
+                        Toast.makeText(this, "Sem internet", Toast.LENGTH_SHORT).show()
+                    ErrorCodes.UNKNOWN_ERROR ->
+                        Toast.makeText(this, "Erro desconhecido", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }
