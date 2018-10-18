@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "458194912365",
+    "firebase_url": "https://hestia-db64e.firebaseio.com",
+    "project_id": "hestia-db64e",
+    "storage_bucket": "hestia-db64e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458194912365:android:6bf387f3619b9312",
+        "android_client_info": {
+          "package_name": "com.ufscar.mobile.hestiaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458194912365-1p07pcc8dohh05h38c4ldrs75pn5jhlu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVLQRErFb1UpE2PqrOQZb2dPbAVpDdIp4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
