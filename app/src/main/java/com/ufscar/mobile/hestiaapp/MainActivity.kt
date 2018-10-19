@@ -29,9 +29,10 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    //For Sign in
+    //Sign in request code
     private val RC_SIGN_IN = 1
 
+    //Sign in builder of firebase
     private val signInProviders =
             listOf(AuthUI.IdpConfig.EmailBuilder()
                     .setAllowNewAccounts(true)
@@ -43,21 +44,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        //For the FAB (We should keep it?)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
 
+        //For the drawer toogle in action bar
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+        //Marking the selected item
         nav_view.setNavigationItemSelectedListener(this)
 
+        //Instantiating RecyclerView
         val recyclerView = rvCard as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
+        //Populating imoveisList
         val imoveis = ArrayList<Imovel>()
         imoveis.add(Imovel("Apartamento", 3, 2, 5,
                 700, 2, 1, 1, 1, "Perto do Centro",
@@ -73,6 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 1000, 2, 2, 1, 1, "Perto do Centro",
                 "Av São Carlos", null))
 
+        //Setting adapter
         val adapter = CardAdapter(imoveis)
         recyclerView.adapter = adapter
 
@@ -93,6 +100,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    //Hadling the options item (We should keep it?)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -103,9 +111,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    //Handling the navigation drawer items
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            //Logging in
             R.id.nav_entrar -> {
                 if (FirebaseAuth.getInstance().currentUser == null) {
                     val intent = AuthUI.getInstance().createSignInIntentBuilder()
@@ -117,18 +127,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     Toast.makeText(this, "Já conectado", Toast.LENGTH_SHORT).show() // TODO: Substituir por logout
                 }
             }
+
+            //Start PerfilActivity
             R.id.nav_perfil -> {
-                startActivity(intentFor<PerfilActivity>())
+                if (FirebaseAuth.getInstance().currentUser == null) {
+                    // Talvez substituir por uma activity de "Sem conta :("
+                    Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
+                } else
+                    startActivity(intentFor<PerfilActivity>())
             }
+
+            //TODO: make the pref forms and put intent below
             R.id.nav_pref -> {
                 Toast.makeText(this, "Preferências", Toast.LENGTH_SHORT).show()
             }
+
+            //TODO: make "Minha Lista" and put intent below
             R.id.nav_list -> {
                 Toast.makeText(this, "Minha Lista", Toast.LENGTH_SHORT).show()
             }
+
+            //TODO: make FAQ and put intent below
             R.id.nav_faq -> {
                 Toast.makeText(this, "FAQ", Toast.LENGTH_SHORT).show()
             }
+
+            //TODO: make "Contato" and put intent below
             R.id.nav_contato -> {
                 Toast.makeText(this, "Contato", Toast.LENGTH_SHORT).show()
             }
@@ -138,20 +162,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    //Here will be all the onActivityResult (when used startActivityForResult() )
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        //For Sign in
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
 
             if (resultCode == Activity.RESULT_OK) {
+                //Placing progress dialog for feedback to user
                 val progressDialog = indeterminateProgressDialog("Configurando sua conta")
 
+                //If first time start MainActivity (?)
                 FirestoreUtil.initCurrentUserIfFirstTime {
                     startActivity(intentFor<MainActivity>().newTask().clearTask())
                     progressDialog.dismiss()
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
+            } else if (resultCode == Activity.RESULT_CANCELED) { // Exception treatment
                 if (response == null) return
 
                 when (response.error?.errorCode) {

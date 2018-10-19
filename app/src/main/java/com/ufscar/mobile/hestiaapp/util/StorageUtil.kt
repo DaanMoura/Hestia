@@ -13,11 +13,11 @@ object StorageUtil {
                 .child(FirebaseAuth.getInstance().uid ?: throw NullPointerException("UID is null"))
 
     fun uploadProfilePhoto(imageBytes: ByteArray,
-                           onSucess: (imagePath: String) -> Unit) {
+                           onSuccess: (imagePath: String) -> Unit) {
         val ref = currentUserRef.child("profilePictures/${UUID.nameUUIDFromBytes(imageBytes)}")
         ref.putBytes(imageBytes)
                 .addOnSuccessListener {
-                    onSucess(ref.path)
+                    onSuccess(ref.path)
                 }
     }
 

@@ -28,6 +28,7 @@ class PerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+        //Changing the picture
         profilePicture.setOnClickListener {
             val intent = Intent().apply {
                 type = "image/*"
@@ -37,6 +38,7 @@ class PerfilActivity : AppCompatActivity() {
             startActivityForResult(Intent.createChooser(intent, "Selecionar Imagem"), RC_SELECT_IMAGE)
         }
 
+        //Saving
         btnSave.setOnClickListener {
             if (::selectedImageBytes.isInitialized)
                 StorageUtil.uploadProfilePhoto(selectedImageBytes) { imagePath ->
@@ -53,6 +55,7 @@ class PerfilActivity : AppCompatActivity() {
             startActivity(intentFor<MainActivity>().newTask().clearTask())
         }
 
+        //Logging out
         btnLogout.setOnClickListener {
             AuthUI.getInstance().signOut(this!!)
                     .addOnCompleteListener {
@@ -64,6 +67,7 @@ class PerfilActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //Selecting image and loading with Glide
         if (requestCode == RC_SELECT_IMAGE && resultCode == Activity.RESULT_OK &&
                 data != null && data.data != null) {
             val selectedImagePath = data.data
@@ -81,9 +85,12 @@ class PerfilActivity : AppCompatActivity() {
         }
     }
 
+    //Place the right data
     override fun onStart() {
         super.onStart()
+
         FirestoreUtil.getCurrentUser { user ->
+
             editNome.setText(user.nome)
             editBio.setText(user.bio)
             if (!pictureJustChanged && user.picturePath != null)
@@ -91,6 +98,9 @@ class PerfilActivity : AppCompatActivity() {
                         .load(StorageUtil.pathToReference(user.picturePath))
                         .placeholder(R.drawable.ic_launcher_foreground)
                         .into(profilePicture)
+
         }
+
+
     }
 }
