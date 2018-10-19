@@ -96,7 +96,7 @@ class PerfilActivity : AppCompatActivity() {
             if (!pictureJustChanged && user.picturePath != null)
                 GlideApp.with(this)
                         .load(StorageUtil.pathToReference(user.picturePath))
-                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .circleCrop()
                         .into(profilePicture)
 
         }

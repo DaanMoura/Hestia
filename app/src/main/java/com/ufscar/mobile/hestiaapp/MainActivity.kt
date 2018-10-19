@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
@@ -19,10 +20,13 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.model.Imovel
+import com.ufscar.mobile.hestiaapp.model.User
 import com.ufscar.mobile.hestiaapp.util.FirestoreUtil
+import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.intentFor
@@ -40,6 +44,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .build())
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -83,7 +88,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val adapter = CardAdapter(imoveis)
         recyclerView.adapter = adapter
 
-        //TODO: mudar nome e email na navigation drawer
+        //Trocando o nome e email da navigation drawer header
+        val navigationView: NavigationView = nav_view
+        val headerView: View = navigationView.getHeaderView(0);
+        val nav_name = headerView.navdrawer_name
+        val nav_email = headerView.navdrawer_email
+        val nav_img = headerView.nav_imageView
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            FirestoreUtil.getCurrentUser { user: User ->
+                nav_name.text = user.nome
+                nav_email.text = user.email
+
+                if (user.picturePath != null)
+                    GlideApp.with(this)
+                            .load(StorageUtil.pathToReference(user.picturePath))
+                            .circleCrop()
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .into(nav_img)
+            }
+        }
+
+
     }
 
     override fun onBackPressed() {
@@ -161,6 +186,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
 
     //Here will be all the onActivityResult (when used startActivityForResult() )
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
