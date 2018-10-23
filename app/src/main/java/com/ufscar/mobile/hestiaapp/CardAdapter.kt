@@ -41,6 +41,7 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
             holder.card.layoutParams = params
         }
 
+      
     }
 
     //Create a view holder

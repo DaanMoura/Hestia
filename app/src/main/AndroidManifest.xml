@@ -19,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".InfoImovelActivity"></activity>
         <activity android:name=".SignInActivity" />
         <activity android:name=".PerfilActivity"></activity>
+
     </application>
 
 </manifest>
