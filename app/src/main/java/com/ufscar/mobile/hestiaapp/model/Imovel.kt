@@ -1,6 +1,7 @@
-package com.ufscar.mobile.hestiaapp
+package com.ufscar.mobile.hestiaapp.model
 
 import android.graphics.Bitmap
+import java.io.Serializable
 
 data class Imovel(val title: String,
                   val max: Int,
@@ -13,4 +14,7 @@ data class Imovel(val title: String,
                   val vaga: Int,
                   val descricao: String,
                   val endereco: String,
-                  val bmFoto: Bitmap?)
+                  val bmFoto: Bitmap?) : Serializable
+
+
+
