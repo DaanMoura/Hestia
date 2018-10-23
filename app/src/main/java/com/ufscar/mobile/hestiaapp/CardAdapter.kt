@@ -37,7 +37,7 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
         //Fixing margin of the first card
         if (position == 0) {
             val params: ViewGroup.MarginLayoutParams = holder.card.layoutParams as ViewGroup.MarginLayoutParams
-            params.setMargins(32, 64, 32, 64) // I dunno why worked with top: 64 and bottom: 64
+            params.setMargins(32, 72, 32, 80) // I dunno why worked with top: 72 and bottom: 80
             holder.card.layoutParams = params
         }
 
