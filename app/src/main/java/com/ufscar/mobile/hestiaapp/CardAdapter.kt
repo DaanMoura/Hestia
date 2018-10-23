@@ -28,6 +28,13 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
         holder.preco.text = "R$ ${imovel.preco},00"
         holder.comodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas"
         holder.descricao.text = imovel.descricao
+
+        //Fixing margin of the first card
+        if (position == 0) {
+            val params: ViewGroup.MarginLayoutParams = holder.card.layoutParams as ViewGroup.MarginLayoutParams
+            params.setMargins(32, 72, 32, 80) // I dunno why worked with top: 72 and bottom: 80
+            holder.card.layoutParams = params
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,5 +46,6 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
         val comodos = itemView.tvComodos as TextView
         val descricao = itemView.tvDesc as TextView
         val interessado = itemView.checkInteressados as CheckBox
+        val card = itemView.card as ViewGroup
     }
 }
