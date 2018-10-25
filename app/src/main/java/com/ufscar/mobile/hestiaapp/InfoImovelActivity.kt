@@ -1,5 +1,7 @@
 package com.ufscar.mobile.hestiaapp
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ufscar.mobile.hestiaapp.model.Imovel
@@ -27,5 +29,15 @@ class InfoImovelActivity : AppCompatActivity() {
             info_desc.text = imovel.descricao
             info_end_text.text = imovel.endereco
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val volta = Intent(this, MainActivity::class.java)
+//        val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom)
+        setResult(Activity.RESULT_OK, volta)
+        finish()
+
     }
 }

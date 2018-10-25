@@ -28,6 +28,11 @@ class PerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+        var atual: Boolean = false
+        FirestoreUtil.getCurrentUser({ user ->
+            atual = user.dono
+//            Toast.makeText(this, "$atual", Toast.LENGTH_SHORT).show()
+        }, this)
 
         //Changing the picture
         profilePicture.setOnClickListener {
@@ -41,6 +46,7 @@ class PerfilActivity : AppCompatActivity() {
 
         //Saving
         btnSave.setOnClickListener {
+
             if (::selectedImageBytes.isInitialized)
                 StorageUtil.uploadProfilePhoto(selectedImageBytes) { imagePath ->
                     FirestoreUtil.updateCurrentUser(editNome.text.toString(),
@@ -54,7 +60,29 @@ class PerfilActivity : AppCompatActivity() {
                         editBio.text.toString(),
                         null, oferecer.isChecked)
 
-            startActivity(intentFor<MainActivity>().newTask().clearTask())
+
+            //NÃO MEXER NISSO A NÃO SER QUE SEJA EXTREMAMENTE NECESSÁRIO!!!!
+            if (atual != oferecer.isChecked) {
+                if (oferecer.isChecked) {
+                    val intentDono = Intent(this, DonoMainActivity::class.java)
+                    setResult(Activity.RESULT_CANCELED, intentDono)
+                    intentDono.newTask().clearTask()
+                    startActivity(intentDono)
+                    finish()
+                } else {
+                    val intent = Intent(this, MainActivity::class.java)
+                    setResult(Activity.RESULT_CANCELED, intent)
+                    intent.newTask().clearTask()
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                val intentDono = Intent(this, DonoMainActivity::class.java)
+                setResult(Activity.RESULT_OK, intentDono)
+                finish()
+            }
+
+
         }
 
         //Logging out

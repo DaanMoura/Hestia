@@ -32,7 +32,7 @@ import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     //Sign in request code
     private val RC_SIGN_IN = 1
     private val REQUEST_INFO = 3
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_dono_main)
         setSupportActionBar(toolbar)
 
         //For the FAB (We should keep it?)
@@ -74,12 +74,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         imoveis.add(Imovel("Apartamento", 3, 2, 5,
                 700, 2, 1, 1, 1, "Perto do Centro",
                 "Av São Carlos", null))
-        imoveis.add(Imovel("Republica", 8, 5, 6,
-                400, 4, 2, 2, 2, "No Kartodromo",
-                "Sei la", null))
-        imoveis.add(Imovel("Casa", 4, 2, 5,
-                1000, 2, 2, 1, 1, "Perto do Centro",
-                "Av São Carlos", null))
 
         imoveis.add(Imovel("Casa", 4, 2, 5,
                 1000, 2, 2, 1, 1, "Perto do Centro",
@@ -96,7 +90,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val nav_img = headerView.nav_imageView
         if (FirebaseAuth.getInstance().currentUser != null) {
             FirestoreUtil.getCurrentUser({ user: User ->
-                nav_name.text = "${user.nome} - Procurando"
+                nav_name.text = "${user.nome} - Oferecendo"
                 nav_email.text = user.email
 
                 if (user.picturePath != null)
@@ -250,8 +244,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             REQUEST_PERFIL -> {
                 if (resultCode == Activity.RESULT_OK) {
                     //TODO: write code here
-                } else if (resultCode == Activity.RESULT_CANCELED) {
-                    finish()
                 }
             }
         }

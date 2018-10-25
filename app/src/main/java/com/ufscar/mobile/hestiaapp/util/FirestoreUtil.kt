@@ -1,7 +1,6 @@
 package com.ufscar.mobile.hestiaapp.util
 
 import android.content.Context
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,7 +39,7 @@ object FirestoreUtil {
     fun getCurrentUser(onComplete: (User) -> Unit, context: Context) {
         currentUserDocRef.get()
                 .addOnSuccessListener {
-                    Toast.makeText(context, "Usuário carregado", Toast.LENGTH_SHORT).show()
+                    //                    Toast.makeText(context, "Usuário carregado", Toast.LENGTH_SHORT).show()
                     onComplete(it.toObject(User::class.java)!!)
                 }
     }
