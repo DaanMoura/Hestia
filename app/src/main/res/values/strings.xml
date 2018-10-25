@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HestiaApp</string>
+    <string name="app_name">Hestia</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Visitante</string>
@@ -13,4 +13,6 @@
     <string name="default_comodos">2 quartos, 1 banheiro, 1 sala</string>
     <string name="default_short_description">Perto do centro</string>
     <string name="tenho_interesse">Tenho interesse</string>
+    <string name="default_adress">Avenida São Carlos, n 100</string>
+    <string name="conversar_dono">Conversar com o dono</string>
 </resources>

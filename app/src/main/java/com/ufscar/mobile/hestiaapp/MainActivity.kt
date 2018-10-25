@@ -1,6 +1,7 @@
 package com.ufscar.mobile.hestiaapp
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -35,6 +36,7 @@ import org.jetbrains.anko.newTask
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     //Sign in request code
     private val RC_SIGN_IN = 1
+    private val EXTRA_IMOVEL = "Imovel"
 
     //Sign in builder of firebase
     private val signInProviders =
@@ -42,6 +44,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .setAllowNewAccounts(true)
                     .setRequireName(true)
                     .build())
+
+    val imoveis = ArrayList<Imovel>()
+    val adapter = CardAdapter(imoveis)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -64,12 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Marking the selected item
         nav_view.setNavigationItemSelectedListener(this)
 
-        //Instantiating RecyclerView
-        val recyclerView = rvCard as RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-
         //Populating imoveisList
-        val imoveis = ArrayList<Imovel>()
         imoveis.add(Imovel("Apartamento", 3, 2, 5,
                 700, 2, 1, 1, 1, "Perto do Centro",
                 "Av São Carlos", null))
@@ -84,10 +84,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 1000, 2, 2, 1, 1, "Perto do Centro",
                 "Av São Carlos", null))
 
-        //Setting adapter
-        val adapter = CardAdapter(imoveis)
-        recyclerView.adapter = adapter
-
         //Trocando o nome e email da navigation drawer header
         val navigationView: NavigationView = nav_view
         val headerView: View = navigationView.getHeaderView(0);
@@ -95,8 +91,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val nav_email = headerView.navdrawer_email
         val nav_img = headerView.nav_imageView
         if (FirebaseAuth.getInstance().currentUser != null) {
-            FirestoreUtil.getCurrentUser { user: User ->
-                nav_name.text = user.nome
+            FirestoreUtil.getCurrentUser({ user: User ->
+                val status = if (user.dono) "Oferecendo" else "Procurando"
+                nav_name.text = "${user.nome} - $status"
                 nav_email.text = user.email
 
                 if (user.picturePath != null)
@@ -105,10 +102,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             .circleCrop()
                             .placeholder(R.drawable.ic_launcher_foreground)
                             .into(nav_img)
-            }
+            }, this)
         }
+    }
 
+    fun loadList() {
+        //Instantiating RecyclerView
+        val recyclerView = rvCard as RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        //Setting adapter
+        val adapter = CardAdapter(imoveis)
+        adapter.setOnClick { imovel, index ->
+            val openInfo = Intent(this, InfoImovelActivity::class.java)
+            openInfo.putExtra(EXTRA_IMOVEL, imovel)
+            //Teste de animação (Apenas para >= Android 5.0)
+            val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_fade_in, R.anim.abc_fade_out)
+            startActivity(openInfo, options.toBundle())
+        }
+        recyclerView.adapter = adapter
+    }
 
+    override fun onResume() {
+        super.onResume()
+        loadList()
     }
 
     override fun onBackPressed() {

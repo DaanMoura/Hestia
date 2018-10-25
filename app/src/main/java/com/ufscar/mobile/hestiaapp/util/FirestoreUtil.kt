@@ -1,5 +1,7 @@
 package com.ufscar.mobile.hestiaapp.util
 
+import android.content.Context
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,7 +19,7 @@ object FirestoreUtil {
                 val newUser = User(FirebaseAuth.getInstance().currentUser?.displayName ?: "",
                         FirebaseAuth.getInstance().currentUser?.email ?: "",
                         "",
-                        null)
+                        null, false)
                 currentUserDocRef.set(newUser).addOnSuccessListener {
                     onComplete()
                 }
@@ -25,18 +27,20 @@ object FirestoreUtil {
         }
     }
 
-    fun updateCurrentUser(name: String = "", email: String = "", bio: String = "", picturePath: String? = null) {
+    fun updateCurrentUser(nome: String = "", email: String = "", bio: String = "", picturePath: String? = null, dono: Boolean = false) {
         val userFieldMap = mutableMapOf<String, Any>()
-        if (name.isNotBlank()) userFieldMap["name"] = name
+        if (nome.isNotBlank()) userFieldMap["nome"] = nome
         if (email.isNotBlank()) userFieldMap["email"] = email
         if (bio.isNotBlank()) userFieldMap["bio"] = bio
         if (picturePath != null) userFieldMap["picturePath"] = picturePath
+        userFieldMap["dono"] = dono
         currentUserDocRef.update(userFieldMap)
     }
 
-    fun getCurrentUser(onComplete: (User) -> Unit) {
+    fun getCurrentUser(onComplete: (User) -> Unit, context: Context) {
         currentUserDocRef.get()
                 .addOnSuccessListener {
+                    Toast.makeText(context, "Usuário carregado", Toast.LENGTH_SHORT).show()
                     onComplete(it.toObject(User::class.java)!!)
                 }
     }
