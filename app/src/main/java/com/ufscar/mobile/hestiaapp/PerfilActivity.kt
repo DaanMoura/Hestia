@@ -28,6 +28,7 @@ class PerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+
         //Changing the picture
         profilePicture.setOnClickListener {
             val intent = Intent().apply {
@@ -45,13 +46,14 @@ class PerfilActivity : AppCompatActivity() {
                     FirestoreUtil.updateCurrentUser(editNome.text.toString(),
                             FirebaseAuth.getInstance().currentUser?.email ?: "",
                             editBio.text.toString(),
-                            imagePath)
+                            imagePath, oferecer.isChecked)
                 }
             else
                 FirestoreUtil.updateCurrentUser(editNome.text.toString(),
                         FirebaseAuth.getInstance().currentUser?.email ?: "",
                         editBio.text.toString(),
-                        null)
+                        null, oferecer.isChecked)
+
             startActivity(intentFor<MainActivity>().newTask().clearTask())
         }
 
@@ -89,8 +91,9 @@ class PerfilActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        FirestoreUtil.getCurrentUser { user ->
-
+        FirestoreUtil.getCurrentUser({ user ->
+            if (user.dono) radioGroup.check(R.id.oferecer)
+            else radioGroup.check(R.id.procurar)
             editNome.setText(user.nome)
             editBio.setText(user.bio)
             if (!pictureJustChanged && user.picturePath != null)
@@ -99,7 +102,7 @@ class PerfilActivity : AppCompatActivity() {
                         .circleCrop()
                         .into(profilePicture)
 
-        }
+        }, this)
 
 
     }
