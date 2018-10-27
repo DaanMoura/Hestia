@@ -6,6 +6,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="meu_feed">Meu Feed</string>
+    <string name="meus_imoveis">Meus Imoveis</string>
     <string name="default_card_title">Apartamento 1</string>
     <string name="default_card_moradores">Moradores: 2/4</string>
     <string name="default_card_interessados">Interessados: 6</string>
@@ -15,4 +16,8 @@
     <string name="tenho_interesse">Tenho interesse</string>
     <string name="default_adress">Avenida São Carlos, n 100</string>
     <string name="conversar_dono">Conversar com o dono</string>
+    <string name="title_desc">Descrição:</string>
+    <string name="salvar">Salvar</string>
+    <string name="logout">Logout</string>
+    <string name="uploading">Uploading</string>
 </resources>

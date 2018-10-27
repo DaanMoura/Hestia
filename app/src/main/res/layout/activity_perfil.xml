@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".PerfilActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        android:indeterminate="false"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/editNome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profilePicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/profilePicture"
         android:layout_width="128dp"
@@ -15,7 +32,6 @@
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_person"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,8 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:background="@color/colorPrimary"
-        android:text="Salvar"
+        android:background="@drawable/rounded_button_primary"
+        android:text="@string/salvar"
+        android:elevation="8dp"
         android:textColor="@color/white"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,8 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
-        android:background="#dc7514"
-        android:text="Logout"
+        android:background="@drawable/rounded_button_secondary"
+        android:text="@string/logout"
+        android:elevation="8dp"
         android:textColor="@color/white"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
