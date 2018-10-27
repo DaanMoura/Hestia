@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.util.FirestoreUtil
@@ -22,13 +23,14 @@ class PerfilActivity : AppCompatActivity() {
     private val RC_SELECT_IMAGE = 2
     private lateinit var selectedImageBytes: ByteArray
     private var pictureJustChanged = false
+    var atual: Boolean = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
-        var atual: Boolean = false
         FirestoreUtil.getCurrentUser({ user ->
             atual = user.dono
 //            Toast.makeText(this, "$atual", Toast.LENGTH_SHORT).show()
@@ -36,6 +38,10 @@ class PerfilActivity : AppCompatActivity() {
 
         //Changing the picture
         profilePicture.setOnClickListener {
+            FirestoreUtil.updateCurrentUser(editNome.text.toString(),
+                    FirebaseAuth.getInstance().currentUser?.email ?: "",
+                    editBio.text.toString(),
+                    null, oferecer.isChecked)
             val intent = Intent().apply {
                 type = "image/*"
                 action = Intent.ACTION_GET_CONTENT
@@ -46,43 +52,27 @@ class PerfilActivity : AppCompatActivity() {
 
         //Saving
         btnSave.setOnClickListener {
-
-            if (::selectedImageBytes.isInitialized)
-                StorageUtil.uploadProfilePhoto(selectedImageBytes) { imagePath ->
-                    FirestoreUtil.updateCurrentUser(editNome.text.toString(),
-                            FirebaseAuth.getInstance().currentUser?.email ?: "",
-                            editBio.text.toString(),
-                            imagePath, oferecer.isChecked)
-                }
-            else
+            //FIXME: nao carrega direito na outra activity
+            if (::selectedImageBytes.isInitialized) {
+                progress_bar.visibility = View.VISIBLE
+                StorageUtil.uploadProfilePhoto(selectedImageBytes,
+                        { imagePath ->
+                            FirestoreUtil.updateCurrentUser(editNome.text.toString(),
+                                    FirebaseAuth.getInstance().currentUser?.email ?: "",
+                                    editBio.text.toString(),
+                                    imagePath, oferecer.isChecked)
+                            exit()
+                        },
+                        { progress ->
+                            progress_bar.progress = progress
+                        }, this)
+            } else {
                 FirestoreUtil.updateCurrentUser(editNome.text.toString(),
                         FirebaseAuth.getInstance().currentUser?.email ?: "",
                         editBio.text.toString(),
                         null, oferecer.isChecked)
-
-
-            //NÃO MEXER NISSO A NÃO SER QUE SEJA EXTREMAMENTE NECESSÁRIO!!!!
-            if (atual != oferecer.isChecked) {
-                if (oferecer.isChecked) {
-                    val intentDono = Intent(this, DonoMainActivity::class.java)
-                    setResult(Activity.RESULT_CANCELED, intentDono)
-                    intentDono.newTask().clearTask()
-                    startActivity(intentDono)
-                    finish()
-                } else {
-                    val intent = Intent(this, MainActivity::class.java)
-                    setResult(Activity.RESULT_CANCELED, intent)
-                    intent.newTask().clearTask()
-                    startActivity(intent)
-                    finish()
-                }
-            } else {
-                val intentDono = Intent(this, DonoMainActivity::class.java)
-                setResult(Activity.RESULT_OK, intentDono)
-                finish()
+                exit()
             }
-
-
         }
 
         //Logging out
@@ -92,8 +82,29 @@ class PerfilActivity : AppCompatActivity() {
                         startActivity(intentFor<MainActivity>().newTask().clearTask())
                     }
         }
+    }
 
-
+    fun exit() {
+        //NÃO MEXER NISSO A NÃO SER QUE SEJA EXTREMAMENTE NECESSÁRIO!!!!
+        if (atual != oferecer.isChecked) {
+            if (oferecer.isChecked) {
+                val intentDono = Intent(this, DonoMainActivity::class.java)
+                setResult(Activity.RESULT_CANCELED, intentDono)
+                intentDono.newTask().clearTask()
+                startActivity(intentDono)
+                finish()
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                setResult(Activity.RESULT_CANCELED, intent)
+                intent.newTask().clearTask()
+                startActivity(intent)
+                finish()
+            }
+        } else {
+            val intentDono = Intent(this, DonoMainActivity::class.java)
+            setResult(Activity.RESULT_OK, intentDono)
+            finish()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -109,6 +120,7 @@ class PerfilActivity : AppCompatActivity() {
 
             GlideApp.with(this)
                     .load(selectedImageBytes)
+                    .circleCrop()
                     .into(profilePicture)
 
             pictureJustChanged = true
@@ -131,7 +143,6 @@ class PerfilActivity : AppCompatActivity() {
                         .into(profilePicture)
 
         }, this)
-
 
     }
 }

@@ -101,11 +101,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 if (user.picturePath != null)
                     GlideApp.with(this)
-                            .load(StorageUtil.pathToReference(user.picturePath))
+                            .load(StorageUtil.pathToReference(user.picturePath!!))
                             .circleCrop()
                             .placeholder(R.drawable.ic_launcher_foreground)
                             .into(nav_img)
             }, this)
+
         }
     }
 
@@ -226,7 +227,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     //If first time start MainActivity (?)
                     FirestoreUtil.initCurrentUserIfFirstTime {
-                        startActivity(intentFor<MainActivity>().newTask().clearTask())
+                        FirestoreUtil.getCurrentUser({ user ->
+                            if (user.dono) startActivity(intentFor<DonoMainActivity>().newTask().clearTask())
+                            else startActivity(intentFor<MainActivity>().newTask().clearTask())
+                        }, this)
                         progressDialog.dismiss()
                     }
                 } else if (resultCode == Activity.RESULT_CANCELED) { // Exception treatment

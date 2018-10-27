@@ -19,4 +19,5 @@
     <string name="title_desc">Descrição:</string>
     <string name="salvar">Salvar</string>
     <string name="logout">Logout</string>
+    <string name="uploading">Uploading</string>
 </resources>

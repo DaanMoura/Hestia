@@ -1,5 +1,6 @@
 package com.ufscar.mobile.hestiaapp.util
 
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -13,11 +14,17 @@ object StorageUtil {
                 .child(FirebaseAuth.getInstance().uid ?: throw NullPointerException("UID is null"))
 
     fun uploadProfilePhoto(imageBytes: ByteArray,
-                           onSuccess: (imagePath: String) -> Unit) {
+                           onSuccess: (imagePath: String) -> Unit,
+                           onProgress: (progress: Int) -> Unit,
+                           context: Context) {
         val ref = currentUserRef.child("profilePictures/${UUID.nameUUIDFromBytes(imageBytes)}")
-        ref.putBytes(imageBytes)
+        val uploadTask = ref.putBytes(imageBytes)
                 .addOnSuccessListener {
                     onSuccess(ref.path)
+                }
+                .addOnProgressListener { uploadTask ->
+                    val progress = (100.0 * uploadTask.bytesTransferred) / uploadTask.totalByteCount
+                    onProgress(progress.toInt())
                 }
     }
 
