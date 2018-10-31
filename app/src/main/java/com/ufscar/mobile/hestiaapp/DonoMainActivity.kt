@@ -94,7 +94,6 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 nav_email.text = user.email
 
                 if (user.picturePath != null)
-                    Toast.makeText(this, "Carregou img na nav", Toast.LENGTH_SHORT).show()
                     GlideApp.with(this)
                             .load(StorageUtil.pathToReference(user.picturePath!!))
                             .circleCrop()
