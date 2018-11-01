@@ -30,6 +30,8 @@
         <activity
             android:name=".DonoMainActivity"
             android:theme="@style/MainTheme.NoActionBar" />
+        <activity android:name=".CadastraImovelActivity"
+            android:label="Cadastro"/>
     </application>
 
 </manifest>

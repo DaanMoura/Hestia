@@ -14,7 +14,10 @@ data class Imovel(val title: String,
                   val vaga: Int,
                   val descricao: String,
                   val endereco: String,
-                  val bmFoto: Bitmap?) : Serializable
+                  val bmFoto: Bitmap?) : Serializable {
+    constructor(): this("",0,0,0,0,
+            0,0,0,0,"","",null)
+}
 
 
 

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -21,7 +20,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.model.Imovel
 import com.ufscar.mobile.hestiaapp.model.User
-import com.ufscar.mobile.hestiaapp.util.FirestoreUtil
+import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -53,12 +52,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        //For the FAB (We should keep it?)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
 
         //For the drawer toogle in action bar
         val toggle = ActionBarDrawerToggle(
@@ -95,7 +88,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val nav_email = headerView.navdrawer_email
         val nav_img = headerView.nav_imageView
         if (FirebaseAuth.getInstance().currentUser != null) {
-            FirestoreUtil.getCurrentUser({ user: User ->
+            FirestoreUserUtil.getCurrentUser({ user: User ->
                 nav_name.text = "${user.nome} - Procurando"
                 nav_email.text = user.email
 
@@ -226,8 +219,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val progressDialog = indeterminateProgressDialog("Configurando sua conta")
 
                     //If first time start MainActivity (?)
-                    FirestoreUtil.initCurrentUserIfFirstTime {
-                        FirestoreUtil.getCurrentUser({ user ->
+                    FirestoreUserUtil.initCurrentUserIfFirstTime {
+                        FirestoreUserUtil.getCurrentUser({ user ->
                             if (user.dono) startActivity(intentFor<DonoMainActivity>().newTask().clearTask())
                             else startActivity(intentFor<MainActivity>().newTask().clearTask())
                         }, this)

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.ufscar.mobile.hestiaapp.util.FirestoreUtil
+import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import org.jetbrains.anko.intentFor
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 startActivity(intentFor<MainActivity>())
                 finish()
             } else {
-                FirestoreUtil.getCurrentUser({ user ->
+                FirestoreUserUtil.getCurrentUser({ user ->
                     if (user.dono) {
                         startActivity(intentFor<DonoMainActivity>())
                         finish()
