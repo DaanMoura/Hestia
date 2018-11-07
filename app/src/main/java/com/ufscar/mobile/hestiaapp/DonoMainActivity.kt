@@ -27,10 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_dono.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.indeterminateProgressDialog
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
+import org.jetbrains.anko.*
 
 class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     //Sign in request code
@@ -68,15 +65,9 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         nav_view.setNavigationItemSelectedListener(this)
 
         //Populating imoveisList
-
         /*FIXME: não está carregando direito(precisa ir para uma outra activity)
-        Talvez de certo com doAsync()
+        Não deu certo com doAsync
          */
-        FirestoreImovelUtil.getAll({
-            imoveis = it
-            loadList()
-        }, this)
-
     }
 
     private fun updateDrawer() {
@@ -120,9 +111,12 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onResume() {
         super.onResume()
-        loadList()
+        FirestoreImovelUtil.getAll {
+            imoveis = it
+            loadList()
+        }
         updateDrawer()
-    }
+        }
 
 
     override fun onBackPressed() {

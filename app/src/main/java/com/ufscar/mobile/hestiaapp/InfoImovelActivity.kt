@@ -27,7 +27,7 @@ class InfoImovelActivity : AppCompatActivity() {
 
         loadInfo(imovel)
 
-        info_end_line.setOnClickListener {
+        info_end_text.setOnClickListener {
             val showOnMap = Intent(Intent.ACTION_VIEW)
             showOnMap.data = Uri.parse("geo:0,0?q=${imovel?.endereco}")
             if(showOnMap.resolveActivity(packageManager) != null) {

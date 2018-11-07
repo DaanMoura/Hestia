@@ -40,13 +40,13 @@ object FirestoreImovelUtil {
         imovelFieldMap["salas"] = salas
         imovelFieldMap["vaga"] = vaga
         imovelFieldMap["descricao"] = descricao
-        imovelFieldMap["endereço"] = endereco
+        imovelFieldMap["endereco"] = endereco
         //TODO: adcionar o campo da foto
 
         imoveisCollectionReference.add(imovelFieldMap)
     }
 
-    fun getAll(onComplete: (ArrayList<Imovel>) -> Unit, context: Context) {
+    fun getAll(onComplete: (ArrayList<Imovel>) -> Unit) {
         val imoveis = ArrayList<Imovel>()
         imoveisCollectionReference.get().addOnCompleteListener {task ->
             if(task.isSuccessful) {
@@ -54,9 +54,9 @@ object FirestoreImovelUtil {
                     imoveis.add(document.toObject(Imovel::class.java))
                 }
                 onComplete(imoveis)
-                Toast.makeText(context, "Dados carregados com sucesso", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "Dados carregados com sucesso", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "Falha ao carregar dados", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "Falha ao carregar dados", Toast.LENGTH_SHORT).show()
             }
         }
     }
