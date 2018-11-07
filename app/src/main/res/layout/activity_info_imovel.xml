@@ -32,9 +32,11 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
+                    <!--Depois essas imagens serão substituidas
+                    por um recycler view-->
                     <ImageView
                         android:layout_width="160dp"
                         android:layout_height="160dp"
@@ -59,7 +61,7 @@
                 android:id="@+id/info_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/default_price"
                 android:fontFamily="@font/googlesans"
                 android:textColor="@color/primaryText"
@@ -69,7 +71,7 @@
                 android:id="@+id/info_moradores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/default_card_moradores"
                 android:fontFamily="@font/googlesans"
                 android:textColor="@color/primaryText"
@@ -79,7 +81,7 @@
                 android:id="@+id/info_interessados"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/default_card_interessados"
                 android:fontFamily="@font/googlesans"
                 android:textColor="@color/primaryText"
@@ -96,7 +98,7 @@
                 android:id="@+id/info_desc_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="20sp"
                 android:text="@string/title_desc"
                 android:fontFamily="@font/googlesans"
@@ -107,7 +109,7 @@
                 android:id="@+id/info_comodos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/default_comodos"
                 android:fontFamily="@font/googlesans"
                 android:textColor="@color/primaryText"
@@ -117,71 +119,59 @@
                 android:id="@+id/info_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/default_short_description"
                 android:textColor="@color/primaryText"
                 android:textSize="16sp" />
 
-            <LinearLayout
-                android:id="@+id/info_end_line"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:orientation="horizontal"
-                android:layout_marginLeft="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp">
+            <TextView
+                android:layout_marginTop="48dp"
+                android:layout_marginStart="4dp"
+                android:id="@+id/info_end_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:drawableStart="@drawable/ic_location"
+                android:text="@string/default_adress"
+                android:fontFamily="@font/googlesans"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_location" />
 
-                <TextView
-                    android:id="@+id/info_end_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/default_adress"
-                    android:fontFamily="@font/googlesans"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp" />
-            </LinearLayout>
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
 
-            <LinearLayout
-                android:id="@+id/info_chat_dono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_chat" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/conversar_dono"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:drawableStart="@drawable/ic_chat"
+                android:text="@string/conversar_dono"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:visibility="invisible"
         android:src="@drawable/ic_favorite"
         app:fabSize="normal" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="invisible"
+        android:src="@drawable/ic_edit_white"
+        app:fabSize="normal" />
+
 
 </FrameLayout>

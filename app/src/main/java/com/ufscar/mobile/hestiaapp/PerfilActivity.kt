@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
-import com.ufscar.mobile.hestiaapp.util.FirestoreUtil
+import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_perfil.*
 import org.jetbrains.anko.act
@@ -31,14 +31,14 @@ class PerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
-        FirestoreUtil.getCurrentUser({ user ->
+        FirestoreUserUtil.getCurrentUser({ user ->
             atual = user.dono
 //            Toast.makeText(this, "$atual", Toast.LENGTH_SHORT).show()
         }, this)
 
         //Changing the picture
         profilePicture.setOnClickListener {
-            FirestoreUtil.updateCurrentUser(editNome.text.toString(),
+            FirestoreUserUtil.updateCurrentUser(editNome.text.toString(),
                     FirebaseAuth.getInstance().currentUser?.email ?: "",
                     editBio.text.toString(),
                     null, oferecer.isChecked)
@@ -57,7 +57,7 @@ class PerfilActivity : AppCompatActivity() {
                 progress_bar.visibility = View.VISIBLE
                 StorageUtil.uploadProfilePhoto(selectedImageBytes,
                         { imagePath ->
-                            FirestoreUtil.updateCurrentUser(editNome.text.toString(),
+                            FirestoreUserUtil.updateCurrentUser(editNome.text.toString(),
                                     FirebaseAuth.getInstance().currentUser?.email ?: "",
                                     editBio.text.toString(),
                                     imagePath, oferecer.isChecked)
@@ -67,7 +67,7 @@ class PerfilActivity : AppCompatActivity() {
                             progress_bar.progress = progress
                         }, this)
             } else {
-                FirestoreUtil.updateCurrentUser(editNome.text.toString(),
+                FirestoreUserUtil.updateCurrentUser(editNome.text.toString(),
                         FirebaseAuth.getInstance().currentUser?.email ?: "",
                         editBio.text.toString(),
                         null, oferecer.isChecked)
@@ -131,7 +131,7 @@ class PerfilActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        FirestoreUtil.getCurrentUser({ user ->
+        FirestoreUserUtil.getCurrentUser({ user ->
             if (user.dono) radioGroup.check(R.id.oferecer)
             else radioGroup.check(R.id.procurar)
             editNome.setText(user.nome)

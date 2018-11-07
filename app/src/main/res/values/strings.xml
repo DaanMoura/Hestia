@@ -20,4 +20,30 @@
     <string name="salvar">Salvar</string>
     <string name="logout">Logout</string>
     <string name="uploading">Uploading</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="informacoes_do_imovel">Informações do Imovel</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="tipo_do_imovel">Tipo do Imóvel</string>
+    <string name="preco">Preço</string>
+    <string name="max_moradores">Nº Máximo de moradores</string>
+    <string name="_1">0</string>
+    <string name="vagas_garagem">Nº Vagas na garagem</string>
+    <string name="n_quartos">Nº Quartos</string>
+    <string name="n_banheiros">Nº Banheiros</string>
+    <string name="n_salas">Nº Salas</string>
+    <string name="n_cozinhas">Nº Cozinhas</string>
+    <string name="info_form_desc">Descrição</string>
+    <string name="prosseguir">Prosseguir</string>
+    <string name="evie_fotos">Envie pelo menos 3 fotos</string>
+    <string name="localizacao">Localização</string>
+    <string name="hint_nome">Nome</string>
+    <string name="descricao_imagem_usuario">Imagem do usuário</string>
+    <string name="hint_bio">Bio</string>
+    <string name="voc_deseja">Você deseja:</string>
+    <string name="radio_procurar_vagas">Procurar vagas</string>
+    <string name="radio_oferecer_vagas">Oferecer vagas</string>
+    <string name="desc_logo_do_aplicativo">Logo do aplicativo</string>
+    <string name="descricao_foto_principal">Foto principal do imóvel</string>
+    <string name="zero">0</string>
 </resources>

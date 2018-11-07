@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -21,16 +20,16 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.model.Imovel
 import com.ufscar.mobile.hestiaapp.model.User
-import com.ufscar.mobile.hestiaapp.util.FirestoreUtil
+import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
+import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.app_bar_dono.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.indeterminateProgressDialog
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
+import org.jetbrains.anko.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     //Sign in request code
@@ -46,23 +45,21 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     .setRequireName(true)
                     .build())
 
-    val imoveis = ArrayList<Imovel>()
+    var imoveis = ArrayList<Imovel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dono_main)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar_dono)
 
-        //For the FAB (We should keep it?)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab_add.setOnClickListener {
+            startActivity(intentFor<CadastraImovelActivity>())
         }
 
         //For the drawer toogle in action bar
         val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this, drawer_layout, toolbar_dono, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -70,15 +67,9 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         nav_view.setNavigationItemSelectedListener(this)
 
         //Populating imoveisList
-        //TODO: Migrate this to Firebase
-        imoveis.add(Imovel("Apartamento", 3, 2, 5,
-                700, 2, 1, 1, 1, "Perto do Centro",
-                "Av São Carlos", null))
-
-        imoveis.add(Imovel("Casa", 4, 2, 5,
-                1000, 2, 2, 1, 1, "Perto do Centro",
-                "Av São Carlos", null))
-
+        /*FIXME: não está carregando direito(precisa ir para uma outra activity)
+        Não deu certo com doAsync
+         */
     }
 
     private fun updateDrawer() {
@@ -89,7 +80,7 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val nav_email = headerView.navdrawer_email
         val nav_img = headerView.nav_imageView
         if (FirebaseAuth.getInstance().currentUser != null) {
-            FirestoreUtil.getCurrentUser({ user: User ->
+            FirestoreUserUtil.getCurrentUser({ user: User ->
                 nav_name.text = "${user.nome} - Oferecendo"
                 nav_email.text = user.email
 
@@ -122,10 +113,22 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onResume() {
         super.onResume()
-        loadList()
+        FirestoreImovelUtil.getAll {
+            imoveis = filterImoveis(it)
+            loadList()
+        }
         updateDrawer()
     }
 
+    fun filterImoveis(list: ArrayList<Imovel>) : ArrayList<Imovel> {
+        val newList = ArrayList<Imovel>()
+        val uid = FirebaseAuth.getInstance().uid
+        for(imovel in  list) {
+            if(imovel.uidDono == uid)
+                newList.add(imovel)
+        }
+        return newList
+    }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -220,7 +223,7 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     val progressDialog = indeterminateProgressDialog("Configurando sua conta")
 
                     //If first time start MainActivity (?)
-                    FirestoreUtil.initCurrentUserIfFirstTime {
+                    FirestoreUserUtil.initCurrentUserIfFirstTime {
                         startActivity(intentFor<MainActivity>().newTask().clearTask())
                         progressDialog.dismiss()
                     }
