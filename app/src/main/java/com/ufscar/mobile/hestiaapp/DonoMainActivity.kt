@@ -115,6 +115,7 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         super.onResume()
         FirestoreImovelUtil.getAll {
             imoveis = filterImoveis(it)
+            loading.visibility = View.INVISIBLE
             loadList()
         }
         updateDrawer()
