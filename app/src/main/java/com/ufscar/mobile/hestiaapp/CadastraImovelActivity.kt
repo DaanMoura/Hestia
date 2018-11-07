@@ -6,6 +6,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.fragments.CadastraInfoImovelFragment
 import com.ufscar.mobile.hestiaapp.fragments.CadastroFotosImovelFragment
 import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
@@ -46,7 +47,8 @@ class CadastraImovelActivity : AppCompatActivity() {
                         edtSalas.text.toString().toInt(),
                         edtVagas.text.toString().toInt(),
                         edtDesc.text.toString(),
-                        edtEnd.text.toString())
+                        edtEnd.text.toString(),
+                        FirebaseAuth.getInstance().uid ?: "")
 
                 val intentDono = Intent(this, DonoMainActivity::class.java)
                 intentDono.newTask().clearTask()

@@ -28,6 +28,8 @@ import kotlinx.android.synthetic.main.app_bar_dono.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.jetbrains.anko.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     //Sign in request code
@@ -112,12 +114,21 @@ class DonoMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onResume() {
         super.onResume()
         FirestoreImovelUtil.getAll {
-            imoveis = it
+            imoveis = filterImoveis(it)
             loadList()
         }
         updateDrawer()
-        }
+    }
 
+    fun filterImoveis(list: ArrayList<Imovel>) : ArrayList<Imovel> {
+        val newList = ArrayList<Imovel>()
+        val uid = FirebaseAuth.getInstance().uid
+        for(imovel in  list) {
+            if(imovel.uidDono == uid)
+                newList.add(imovel)
+        }
+        return newList
+    }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

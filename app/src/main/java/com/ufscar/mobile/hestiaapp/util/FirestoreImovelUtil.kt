@@ -27,6 +27,7 @@ object FirestoreImovelUtil {
                      vaga: Int = 0,
                      descricao: String = "",
                      endereco: String = "",
+                     uidDono: String = "",
                      bmFoto: Bitmap? = null) {
         val imovelFieldMap = mutableMapOf<String, Any>()
 
@@ -41,6 +42,7 @@ object FirestoreImovelUtil {
         imovelFieldMap["vaga"] = vaga
         imovelFieldMap["descricao"] = descricao
         imovelFieldMap["endereco"] = endereco
+        imovelFieldMap["uidDono"] = uidDono
         //TODO: adcionar o campo da foto
 
         imoveisCollectionReference.add(imovelFieldMap)

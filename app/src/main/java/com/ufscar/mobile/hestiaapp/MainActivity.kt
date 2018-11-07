@@ -20,6 +20,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.model.Imovel
 import com.ufscar.mobile.hestiaapp.model.User
+import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
 import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .setRequireName(true)
                     .build())
 
-    val imoveis = ArrayList<Imovel>()
+    var imoveis = ArrayList<Imovel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -64,20 +65,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Populating imoveisList
         //TODO: Migrate this to Firebase
-        imoveis.add(Imovel("Apartamento", 3, 2, 5,
-                700, 2, 1, 1, 1, "Perto do Centro",
-                "Av São Carlos", null))
-        imoveis.add(Imovel("Republica", 8, 5, 6,
-                400, 4, 2, 2, 2, "No Kartodromo",
-                "Sei la", null))
-        imoveis.add(Imovel("Casa", 4, 2, 5,
-                1000, 2, 2, 1, 1, "Perto do Centro",
-                "Av São Carlos", null))
-
-        imoveis.add(Imovel("Casa", 4, 2, 5,
-                1000, 2, 2, 1, 1, "Perto do Centro",
-                "Av São Carlos", null))
-
     }
 
     private fun updateDrawer() {
@@ -121,7 +108,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onResume() {
         super.onResume()
-        loadList()
+        FirestoreImovelUtil.getAll {
+            imoveis = it
+            loadList()
+        }
         updateDrawer()
     }
 
