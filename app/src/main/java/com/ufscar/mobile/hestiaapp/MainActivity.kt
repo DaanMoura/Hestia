@@ -110,6 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onResume()
         FirestoreImovelUtil.getAll {
             imoveis = it
+            loading.visibility = View.INVISIBLE
             loadList()
         }
         updateDrawer()
