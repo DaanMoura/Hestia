@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.model.Imovel
 import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import kotlinx.android.synthetic.main.activity_info_imovel.*
@@ -17,11 +18,12 @@ class InfoImovelActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_imovel)
-        FirestoreUserUtil.getCurrentUser({ user ->
-            if(user.dono) fab_edit.visibility = View.VISIBLE
-            else fab_favorite.visibility = View.VISIBLE
-        }, this)
-
+        if(FirebaseAuth.getInstance().currentUser != null) {
+            FirestoreUserUtil.getCurrentUser({ user ->
+                if(user.dono) fab_edit.visibility = View.VISIBLE
+                else fab_favorite.visibility = View.VISIBLE
+            }, this)
+        }
 
         val imovel = getIntent().getExtras().getSerializable(EXTRA_IMOVEL) as? Imovel
 

@@ -46,4 +46,12 @@
     <string name="desc_logo_do_aplicativo">Logo do aplicativo</string>
     <string name="descricao_foto_principal">Foto principal do imóvel</string>
     <string name="zero">0</string>
+    <string name="entrar">Entrar</string>
+    <string name="perfil">Perfil</string>
+    <string name="prefer_ncias">Preferências</string>
+    <string name="minha_lista">Minha Lista</string>
+    <string name="meusimoveis">Meus Imóveis</string>
+    <string name="suporte">Suporte</string>
+    <string name="faq">FAQ</string>
+    <string name="contato">Contato</string>
 </resources>

@@ -14,20 +14,8 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         Handler().postDelayed({
-            if (FirebaseAuth.getInstance().currentUser == null) {
-                startActivity(intentFor<MainActivity>())
-                finish()
-            } else {
-                FirestoreUserUtil.getCurrentUser({ user ->
-                    if (user.dono) {
-                        startActivity(intentFor<DonoMainActivity>())
-                        finish()
-                    } else {
-                        startActivity(intentFor<MainActivity>())
-                        finish()
-                    }
-                }, this)
-            }
+            startActivity(intentFor<MainActivity>())
+            finish()
         }, 1000)
     }
 }

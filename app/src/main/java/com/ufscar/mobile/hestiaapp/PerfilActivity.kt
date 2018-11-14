@@ -88,7 +88,7 @@ class PerfilActivity : AppCompatActivity() {
         //NÃO MEXER NISSO A NÃO SER QUE SEJA EXTREMAMENTE NECESSÁRIO!!!!
         if (atual != oferecer.isChecked) {
             if (oferecer.isChecked) {
-                val intentDono = Intent(this, DonoMainActivity::class.java)
+                val intentDono = Intent(this, MeusImoveisActivity::class.java)
                 setResult(Activity.RESULT_CANCELED, intentDono)
                 intentDono.newTask().clearTask()
                 startActivity(intentDono)
@@ -101,7 +101,7 @@ class PerfilActivity : AppCompatActivity() {
                 finish()
             }
         } else {
-            val intentDono = Intent(this, DonoMainActivity::class.java)
+            val intentDono = Intent(this, MeusImoveisActivity::class.java)
             setResult(Activity.RESULT_OK, intentDono)
             finish()
         }

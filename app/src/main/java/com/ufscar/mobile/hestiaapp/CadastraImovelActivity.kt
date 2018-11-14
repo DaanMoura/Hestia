@@ -1,16 +1,11 @@
 package com.ufscar.mobile.hestiaapp
 
-import android.app.Activity
-import android.app.Fragment
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import com.google.firebase.auth.FirebaseAuth
-import com.ufscar.mobile.hestiaapp.fragments.CadastraInfoImovelFragment
-import com.ufscar.mobile.hestiaapp.fragments.CadastroFotosImovelFragment
 import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
-import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import kotlinx.android.synthetic.main.fragment_cadastra_info_imovel.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.newTask
@@ -50,7 +45,7 @@ class CadastraImovelActivity : AppCompatActivity() {
                         edtEnd.text.toString(),
                         FirebaseAuth.getInstance().uid ?: "")
 
-                val intentDono = Intent(this, DonoMainActivity::class.java)
+                val intentDono = Intent(this, MeusImoveisActivity::class.java)
                 intentDono.newTask().clearTask()
                     startActivity(intentDono)
                     finish()

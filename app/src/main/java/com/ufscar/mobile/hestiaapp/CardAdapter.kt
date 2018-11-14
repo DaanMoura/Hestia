@@ -46,12 +46,12 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
             itemView.tvComodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas"
             itemView.tvDesc.text = imovel.descricao
             itemView.checkInteressados as CheckBox
-            val card = itemView.card as CardView
+            /*val card = itemView.card as CardView
             if (adapterPosition == 0) {
                 val params: ViewGroup.MarginLayoutParams = card.layoutParams as ViewGroup.MarginLayoutParams
                 params.setMargins(32, 72, 32, 80) // I dunno why worked with top: 72 and bottom: 80
                 card.layoutParams = params
-            }
+            }*/
 
             if (onClickListener != null) {
                 itemView.setOnClickListener {

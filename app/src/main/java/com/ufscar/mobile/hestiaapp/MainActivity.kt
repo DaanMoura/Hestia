@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val nav_img = headerView.nav_imageView
         if (FirebaseAuth.getInstance().currentUser != null) {
             FirestoreUserUtil.getCurrentUser({ user: User ->
-                nav_name.text = "${user.nome} - Procurando"
+                nav_name.text = user.nome
                 nav_email.text = user.email
 
                 if (user.picturePath != null)
@@ -112,6 +112,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             imoveis = it
             loading.visibility = View.INVISIBLE
             loadList()
+        }
+        if(FirebaseAuth.getInstance().currentUser != null) {
+            FirestoreUserUtil.getCurrentUser({user ->
+                if(user.dono)
+                    nav_view.menu.findItem(R.id.nav_imoveis).setVisible(true)
+            }, this)
         }
         updateDrawer()
     }
@@ -170,6 +176,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
 
+            R.id.nav_imoveis -> {
+                if (FirebaseAuth.getInstance().currentUser == null) {
+                    // Talvez substituir por uma activity de "Sem conta :("
+                    Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
+                } else {
+                    FirestoreUserUtil.getCurrentUser({user ->
+                        startActivity(intentFor<MeusImoveisActivity>())
+                    }, this)
+                }
+            }
+
             //TODO: make the pref forms and put intent below
             R.id.nav_pref -> {
                 Toast.makeText(this, "Preferências", Toast.LENGTH_SHORT).show()
@@ -212,7 +229,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     //If first time start MainActivity (?)
                     FirestoreUserUtil.initCurrentUserIfFirstTime {
                         FirestoreUserUtil.getCurrentUser({ user ->
-                            if (user.dono) startActivity(intentFor<DonoMainActivity>().newTask().clearTask())
+                            if (user.dono) startActivity(intentFor<MeusImoveisActivity>().newTask().clearTask())
                             else startActivity(intentFor<MainActivity>().newTask().clearTask())
                         }, this)
                         progressDialog.dismiss()
