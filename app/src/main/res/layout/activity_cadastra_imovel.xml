@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastraImovelActivity">
+    tools:context=".cenarios.cadastra_imovel.CadastraImovelActivity">
     <fragment android:name="com.ufscar.mobile.hestiaapp.fragments.CadastraInfoImovelFragment"
         android:id="@+id/fragment_container"
         android:layout_weight="1"

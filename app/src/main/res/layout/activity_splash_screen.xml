@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".SplashScreenActivity">
+    tools:context=".cenarios.splash_screen.SplashScreenActivity">
 
     <!--Essa splash screen com certeza vai ser melhorada-->
     <TextView
