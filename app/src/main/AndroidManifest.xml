@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".cenarios.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/MainTheme.NoActionBar" />
         <activity
-            android:name=".InfoImovelActivity"
+            android:name="com.ufscar.mobile.hestiaapp.cenarios.info_imovel.InfoImovelActivity"
             android:label="Detalhes"
             android:theme="@style/AppTheme" />
-        <activity android:name=".PerfilActivity" />
+        <activity android:name=".cenarios.perfil.PerfilActivity" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".cenarios.splash_screen.SplashScreenActivity"
             android:theme="@style/MainTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +28,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MeusImoveisActivity"
+            android:name=".cenarios.meus_imoveis.MeusImoveisActivity"
             android:theme="@style/MainTheme.NoActionBar" />
-        <activity android:name=".CadastraImovelActivity"
+        <activity android:name="com.ufscar.mobile.hestiaapp.cenarios.cadastra_imovel.CadastraImovelActivity"
             android:label="Cadastro"/>
     </application>
 
