@@ -7,12 +7,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.cenarios.main.MainActivity
 import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
-import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import com.ufscar.mobile.hestiaapp.util.GlideApp
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_perfil.*
@@ -22,93 +19,49 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import java.io.ByteArrayOutputStream
 
-class PerfilActivity : AppCompatActivity() {
+class PerfilActivity : AppCompatActivity(), PerfilContract.View {
 
     private val RC_SELECT_IMAGE = 2
     private lateinit var selectedImageBytes: ByteArray
     private var pictureJustChanged = false
     var atual: Boolean = false
 
-
+    val presenter: PerfilContract.Presenter = PerfilPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
-        FirestoreUserUtil.getCurrentUser({ user ->
-            atual = user.dono
-//            Toast.makeText(this, "$atual", Toast.LENGTH_SHORT).show()
-        }, this)
+        atual = presenter.isDono(this)
 
         //Changing the picture
         profilePicture.setOnClickListener {
-            FirestoreUserUtil.updateCurrentUser(editNome.text.toString(),
-                    FirebaseAuth.getInstance().currentUser?.email ?: "",
-                    editBio.text.toString(),
-                    null, oferecer.isChecked)
-            val intent = Intent().apply {
-                type = "image/*"
-                action = Intent.ACTION_GET_CONTENT
-                putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png"))
-            }
-            startActivityForResult(Intent.createChooser(intent, "Selecionar Imagem"), RC_SELECT_IMAGE)
+            presenter.onChangePhoto(editNome.text.toString(), editBio.text.toString(), oferecer.isChecked)
         }
 
         //Saving
         btnSave.setOnClickListener {
             //FIXME: nao carrega direito na outra activity
             if (::selectedImageBytes.isInitialized) {
-                progress_bar.visibility = View.VISIBLE
-                StorageUtil.uploadProfilePhoto(selectedImageBytes,
-                        { imagePath ->
-                            FirestoreUserUtil.updateCurrentUser(editNome.text.toString(),
-                                    FirebaseAuth.getInstance().currentUser?.email ?: "",
-                                    editBio.text.toString(),
-                                    imagePath, oferecer.isChecked)
-                            exit()
-                        },
-                        { progress ->
-                            progress_bar.progress = progress
-                        }, this)
+                presenter.onSaveWithPhoto(this, selectedImageBytes, editNome.text.toString(),
+                        editBio.text.toString(), oferecer.isChecked)
             } else {
-                FirestoreUserUtil.updateCurrentUser(editNome.text.toString(),
-                        FirebaseAuth.getInstance().currentUser?.email ?: "",
-                        editBio.text.toString(),
-                        null, oferecer.isChecked)
-                exit()
+                presenter.onSaveWithoutPhoto(editNome.text.toString(), editBio.text.toString(), oferecer.isChecked)
             }
         }
 
         //Logging out
         btnLogout.setOnClickListener {
-            AuthUI.getInstance().signOut(this!!)
-                    .addOnCompleteListener {
-                        startActivity(intentFor<MainActivity>().newTask().clearTask())
-                    }
+            presenter.onLogout(this)
         }
     }
 
-    fun exit() {
-        //NÃO MEXER NISSO A NÃO SER QUE SEJA EXTREMAMENTE NECESSÁRIO!!!!
-        if (atual != oferecer.isChecked) {
-            if (oferecer.isChecked) {
-                val intentDono = Intent(this, MeusImoveisActivity::class.java)
-                setResult(Activity.RESULT_CANCELED, intentDono)
-                intentDono.newTask().clearTask()
-                startActivity(intentDono)
-                finish()
-            } else {
-                val intent = Intent(this, MainActivity::class.java)
-                setResult(Activity.RESULT_CANCELED, intent)
-                intent.newTask().clearTask()
-                startActivity(intent)
-                finish()
-            }
-        } else {
-            val intentDono = Intent(this, MeusImoveisActivity::class.java)
-            setResult(Activity.RESULT_OK, intentDono)
-            finish()
-        }
+    override fun saveSucces() {
+        val intent = Intent(this, MainActivity::class.java)
+        setResult(Activity.RESULT_CANCELED, intent)
+        intent.newTask().clearTask()
+        startActivity(intent)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -134,19 +87,43 @@ class PerfilActivity : AppCompatActivity() {
     //Place the right data
     override fun onStart() {
         super.onStart()
+        presenter.onSetFields(this)
 
-        FirestoreUserUtil.getCurrentUser({ user ->
-            if (user.dono) radioGroup.check(R.id.oferecer)
-            else radioGroup.check(R.id.procurar)
-            editNome.setText(user.nome)
-            editBio.setText(user.bio)
-            if (!pictureJustChanged && user.picturePath != null)
-                GlideApp.with(this)
-                        .load(StorageUtil.pathToReference(user.picturePath))
-                        .circleCrop()
-                        .into(profilePicture)
+    }
 
-        }, this)
+    override fun changePhotoSuccess() {
+        val intent = Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png"))
+        }
+        startActivityForResult(Intent.createChooser(intent, "Selecionar Imagem"), RC_SELECT_IMAGE)
+    }
 
+    override fun showProgressBar() {
+        progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun setUploadProgress(progress: Int) {
+        progress_bar.progress = progress
+    }
+
+    override fun logoutSucces() {
+        startActivity(intentFor<MainActivity>().newTask().clearTask())
+    }
+
+    override fun setFieldsSucces(dono: Boolean, nome: String, bio: String, picturePath: String?) {
+        if(dono) {
+            radioGroup.check(R.id.oferecer)
+        } else {
+            radioGroup.check(R.id.procurar)
+        }
+        editNome.setText(nome)
+        editBio.setText(bio)
+        if (!pictureJustChanged && picturePath != null)
+            GlideApp.with(this)
+                    .load(StorageUtil.pathToReference(picturePath))
+                    .circleCrop()
+                    .into(profilePicture)
     }
 }
