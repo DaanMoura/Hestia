@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.cenarios.main.MainActivity
-import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
-import com.ufscar.mobile.hestiaapp.util.GlideApp
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_perfil.*
 import org.jetbrains.anko.act
@@ -18,6 +16,8 @@ import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import java.io.ByteArrayOutputStream
+import com.bumptech.glide.Glide
+import com.ufscar.mobile.hestiaapp.util.GlideApp
 
 class PerfilActivity : AppCompatActivity(), PerfilContract.View {
 
