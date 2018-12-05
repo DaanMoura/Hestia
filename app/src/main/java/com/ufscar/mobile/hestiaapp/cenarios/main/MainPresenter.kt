@@ -17,13 +17,21 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
                     .build())
 
     override fun onUpdateDrawer(context: Context) {
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            view.hideMeusImoveis()
+            view.hidePerfil()
+            view.hidePreferencias()
+            view.hideFavoritos()
+            view.showEntrar()
+        } else {
             FirestoreUserUtil.getCurrentUser({ user: User ->
                 view.updateDrawerSuccess(user.nome, user.email, user.picturePath)
-                if(user.dono)
-                    view.showMeusImoveisItem()
             }, context)
-
+            view.hideEntrar()
+            view.showPerfil()
+            view.showMeusImoveis()
+            view.showPreferencias()
+            view.showFavoritos()
         }
     }
 
@@ -43,13 +51,13 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
                     .build()
             view.entrarSucces(intent)
         } else {
-            view.entrarFailed()
+            view.showMessage("Não foi possível realizar essa operação")
         }
     }
 
     override fun onPerfil() {
         if (FirebaseAuth.getInstance().currentUser == null) {
-            view.perfilFailed()
+            view.showMessage("Não foi possível realizar essa operação")
         } else {
             view.perfilSuccess()
         }
@@ -57,7 +65,7 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
 
     override fun onImoveis() {
         if (FirebaseAuth.getInstance().currentUser == null) {
-            view.imoveisFailed()
+            view.showMessage("Não foi possível realizar essa operação")
         } else {
             view.imoveisSuccess()
         }
