@@ -1,6 +1,7 @@
 package com.ufscar.mobile.hestiaapp.cenarios.main
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -14,19 +15,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.auth.FirebaseAuth
-import com.ufscar.mobile.hestiaapp.*
+import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.adapter.CardAdapter
 import com.ufscar.mobile.hestiaapp.cenarios.info_imovel.InfoImovelActivity
 import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
 import com.ufscar.mobile.hestiaapp.cenarios.perfil.PerfilActivity
 import com.ufscar.mobile.hestiaapp.model.Imovel
-import com.ufscar.mobile.hestiaapp.model.User
-import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
-import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import com.ufscar.mobile.hestiaapp.util.GlideApp
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,21 +34,17 @@ import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View {
     //Sign in request code
     private val RC_SIGN_IN = 1
     private val REQUEST_INFO = 3
     private val REQUEST_PERFIL = 4
     private val EXTRA_IMOVEL = "Imovel"
 
-    //Sign in builder of firebase
-    private val signInProviders =
-            listOf(AuthUI.IdpConfig.EmailBuilder()
-                    .setAllowNewAccounts(true)
-                    .setRequireName(true)
-                    .build())
+    val presenter: MainContract.Presenter = MainPresenter(this)
 
     var imoveis = ArrayList<Imovel>()
+    lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -73,30 +65,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //TODO: Migrate this to Firebase
     }
 
-    private fun updateDrawer() {
-        //Trocando o nome e email da navigation drawer header
+    override fun updateDrawerSuccess(nome: String, email: String, picturePath: String?) {
         val navigationView: NavigationView = nav_view
         val headerView: View = navigationView.getHeaderView(0);
         val nav_name = headerView.navdrawer_name
         val nav_email = headerView.navdrawer_email
         val nav_img = headerView.nav_imageView
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            FirestoreUserUtil.getCurrentUser({ user: User ->
-                nav_name.text = user.nome
-                nav_email.text = user.email
+        nav_name.text = nome
+        nav_email.text = email
 
-                if (user.picturePath != null)
-                    GlideApp.with(this)
-                            .load(StorageUtil.pathToReference(user.picturePath!!))
-                            .circleCrop()
-                            .placeholder(R.drawable.ic_launcher_foreground)
-                            .into(nav_img)
-            }, this)
-
-        }
+        if (picturePath != null)
+            GlideApp.with(this)
+                    .load(StorageUtil.pathToReference(picturePath!!))
+                    .circleCrop()
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .into(nav_img)
     }
 
-    fun loadList() {
+    override fun showList(list: ArrayList<Imovel>) {
+        imoveis = list
         //Instantiating RecyclerView
         val recyclerView = rvCard as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
@@ -114,18 +101,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onResume() {
         super.onResume()
-        FirestoreImovelUtil.getAll {
-            imoveis = it
-            loading.visibility = View.INVISIBLE
-            loadList()
-        }
-        if(FirebaseAuth.getInstance().currentUser != null) {
-            FirestoreUserUtil.getCurrentUser({user ->
-                if(user.dono)
-                    nav_view.menu.findItem(R.id.nav_imoveis).setVisible(true)
-            }, this)
-        }
-        updateDrawer()
+        presenter.onUpdateList()
+        presenter.onUpdateDrawer(this)
+    }
+
+    override fun showMeusImoveisItem() {
+        nav_view.menu.findItem(R.id.nav_imoveis).setVisible(true)
+    }
+
+    override fun showLoading() {
+        loading.visibility = View.INVISIBLE
     }
 
 
@@ -154,43 +139,48 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun entrarSucces(intent: Intent) {
+        startActivityForResult(intent, RC_SIGN_IN)
+    }
+
+    override fun entrarFailed() {
+        Toast.makeText(this, "Já conectado", Toast.LENGTH_SHORT).show() // TODO: Substituir por logout
+    }
+
+    override fun perfilSuccess() {
+        val editPerfil = Intent(this, PerfilActivity::class.java)
+        startActivityForResult(editPerfil, REQUEST_PERFIL)
+    }
+
+    override fun perfilFailed() {
+        // Talvez substituir por uma activity de "Sem conta :("
+        Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun imoveisSuccess() {
+        startActivity(intentFor<MeusImoveisActivity>())
+    }
+
+    override fun imoveisFailed() {
+        Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
+    }
+
     //Handling the navigation drawer items
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
             //Logging in
             R.id.nav_entrar -> {
-                if (FirebaseAuth.getInstance().currentUser == null) {
-                    val intent = AuthUI.getInstance().createSignInIntentBuilder()
-                            .setAvailableProviders(signInProviders)
-                            .setLogo(R.drawable.ic_home) // TODO: Change this later
-                            .build()
-                    startActivityForResult(intent, RC_SIGN_IN)
-                } else {
-                    Toast.makeText(this, "Já conectado", Toast.LENGTH_SHORT).show() // TODO: Substituir por logout
-                }
+                presenter.onEntrar()
             }
 
             //Start PerfilActivity
             R.id.nav_perfil -> {
-                if (FirebaseAuth.getInstance().currentUser == null) {
-                    // Talvez substituir por uma activity de "Sem conta :("
-                    Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
-                } else {
-                    val editPerfil = Intent(this, PerfilActivity::class.java)
-                    startActivityForResult(editPerfil, REQUEST_PERFIL)
-                }
+                presenter.onPerfil()
             }
 
             R.id.nav_imoveis -> {
-                if (FirebaseAuth.getInstance().currentUser == null) {
-                    // Talvez substituir por uma activity de "Sem conta :("
-                    Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
-                } else {
-                    FirestoreUserUtil.getCurrentUser({user ->
-                        startActivity(intentFor<MeusImoveisActivity>())
-                    }, this)
-                }
+                presenter.onImoveis()
             }
 
             //TODO: make the pref forms and put intent below
@@ -218,6 +208,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    override fun firstTimeSuccess() {
+        startActivity(intentFor<MainActivity>().newTask().clearTask())
+        progressDialog.dismiss()
+    }
 
     //Here will be all the onActivityResult (when used startActivityForResult() )
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -230,16 +224,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 if (resultCode == Activity.RESULT_OK) {
                     //Placing progress dialog for feedback to user
-                    val progressDialog = indeterminateProgressDialog("Configurando sua conta")
+                    progressDialog = indeterminateProgressDialog("Configurando sua conta")
 
                     //If first time start MainActivity (?)
-                    FirestoreUserUtil.initCurrentUserIfFirstTime {
-                        FirestoreUserUtil.getCurrentUser({ user ->
-                            if (user.dono) startActivity(intentFor<MeusImoveisActivity>().newTask().clearTask())
-                            else startActivity(intentFor<MainActivity>().newTask().clearTask())
-                        }, this)
-                        progressDialog.dismiss()
-                    }
+                    presenter.onFirstTime(this)
                 } else if (resultCode == Activity.RESULT_CANCELED) { // Exception treatment
                     if (response == null) return
 
