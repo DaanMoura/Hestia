@@ -16,12 +16,15 @@ import kotlinx.android.synthetic.main.activity_info_imovel.*
 
 class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
     private val EXTRA_IMOVEL = "Imovel"
+    private val EXTRA_SHOW_EDIT = "ShowEdit"
     val presenter: InfoImovelContract.Presenter = InfoImovelPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_imovel)
-        presenter.onLoadFab(this)
+
+        val showEdit = intent.extras.getSerializable(EXTRA_SHOW_EDIT) as Boolean
+        presenter.onLoadFab(this, showEdit)
 
         val imovel = getIntent().getExtras().getSerializable(EXTRA_IMOVEL) as? Imovel
 

@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val REQUEST_INFO = 3
     private val REQUEST_PERFIL = 4
     private val EXTRA_IMOVEL = "Imovel"
+    private val EXTRA_SHOW_EDIT = "ShowEdit"
 
     val presenter: MainContract.Presenter = MainPresenter(this)
 
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         adapter.setOnClick { imovel, index ->
             val openInfo = Intent(this, InfoImovelActivity::class.java)
             openInfo.putExtra(EXTRA_IMOVEL, imovel)
+            openInfo.putExtra(EXTRA_SHOW_EDIT, false)
             //Teste de animação (Apenas para >= Android 5.0)
 //            val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_fade_in, R.anim.abc_fade_out)
             startActivityForResult(openInfo, REQUEST_INFO)

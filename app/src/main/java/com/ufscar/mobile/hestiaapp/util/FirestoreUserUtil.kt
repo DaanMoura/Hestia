@@ -18,7 +18,7 @@ object FirestoreUserUtil {
                 val newUser = User(FirebaseAuth.getInstance().currentUser?.displayName ?: "",
                         FirebaseAuth.getInstance().currentUser?.email ?: "",
                         "",
-                        null, false)
+                        null)
                 currentUserDocRef.set(newUser).addOnSuccessListener {
                     onComplete()
                 }
@@ -26,13 +26,12 @@ object FirestoreUserUtil {
         }
     }
 
-    fun updateCurrentUser(nome: String = "", email: String = "", bio: String = "", picturePath: String? = null, dono: Boolean = false) {
+    fun updateCurrentUser(nome: String = "", email: String = "", bio: String = "", picturePath: String? = null) {
         val userFieldMap = mutableMapOf<String, Any>()
         if (nome.isNotBlank()) userFieldMap["nome"] = nome
         if (email.isNotBlank()) userFieldMap["email"] = email
         if (bio.isNotBlank()) userFieldMap["bio"] = bio
         if (picturePath != null) userFieldMap["picturePath"] = picturePath
-        userFieldMap["dono"] = dono
         currentUserDocRef.update(userFieldMap)
     }
 

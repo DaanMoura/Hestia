@@ -9,6 +9,6 @@ interface InfoImovelContract {
     }
 
     interface Presenter {
-        fun onLoadFab(context: Context)
+        fun onLoadFab(context: Context, showEdit: Boolean)
     }
 }

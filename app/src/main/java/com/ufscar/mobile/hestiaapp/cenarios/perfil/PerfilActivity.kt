@@ -32,11 +32,10 @@ class PerfilActivity : AppCompatActivity(), PerfilContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
-        atual = presenter.isDono(this)
 
         //Changing the picture
         profilePicture.setOnClickListener {
-            presenter.onChangePhoto(editNome.text.toString(), editBio.text.toString(), oferecer.isChecked)
+            presenter.onChangePhoto(editNome.text.toString(), editBio.text.toString())
         }
 
         //Saving
@@ -44,9 +43,9 @@ class PerfilActivity : AppCompatActivity(), PerfilContract.View {
             //FIXME: nao carrega direito na outra activity
             if (::selectedImageBytes.isInitialized) {
                 presenter.onSaveWithPhoto(this, selectedImageBytes, editNome.text.toString(),
-                        editBio.text.toString(), oferecer.isChecked)
+                        editBio.text.toString())
             } else {
-                presenter.onSaveWithoutPhoto(editNome.text.toString(), editBio.text.toString(), oferecer.isChecked)
+                presenter.onSaveWithoutPhoto(editNome.text.toString(), editBio.text.toString())
             }
         }
 
@@ -112,12 +111,7 @@ class PerfilActivity : AppCompatActivity(), PerfilContract.View {
         startActivity(intentFor<MainActivity>().newTask().clearTask())
     }
 
-    override fun setFieldsSucces(dono: Boolean, nome: String, bio: String, picturePath: String?) {
-        if(dono) {
-            radioGroup.check(R.id.oferecer)
-        } else {
-            radioGroup.check(R.id.procurar)
-        }
+    override fun setFieldsSucces(nome: String, bio: String, picturePath: String?) {
         editNome.setText(nome)
         editBio.setText(bio)
         if (!pictureJustChanged && picturePath != null)

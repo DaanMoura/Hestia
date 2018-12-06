@@ -12,28 +12,20 @@ import kotlinx.android.synthetic.main.activity_perfil.*
 
 class PerfilPresenter(val view: PerfilContract.View): PerfilContract.Presenter {
 
-    override fun isDono(context: Context): Boolean {
-        var status = false
-        FirestoreUserUtil.getCurrentUser({ user ->
-            status = user.dono
-        }, context)
-        return status
-    }
-
-    override fun onChangePhoto(nome: String, bio: String, oferecer: Boolean) {
+    override fun onChangePhoto(nome: String, bio: String) {
         FirestoreUserUtil.updateCurrentUser(nome,
                 FirebaseAuth.getInstance().currentUser?.email ?: "",
-                bio, null, oferecer)
+                bio, null)
         view.changePhotoSuccess()
     }
 
-    override fun onSaveWithPhoto(context: Context, imageBytes: ByteArray, nome: String, bio: String, oferecer: Boolean) {
+    override fun onSaveWithPhoto(context: Context, imageBytes: ByteArray, nome: String, bio: String) {
         view.showProgressBar()
         StorageUtil.uploadProfilePhoto(imageBytes,
                 { imagePath ->
                     FirestoreUserUtil.updateCurrentUser(nome,
                             FirebaseAuth.getInstance().currentUser?.email ?: "",
-                            bio, imagePath, oferecer)
+                            bio, imagePath)
                     view.saveSucces()
                 },
                 { progress ->
@@ -41,10 +33,10 @@ class PerfilPresenter(val view: PerfilContract.View): PerfilContract.Presenter {
                 }, context)
     }
 
-    override fun onSaveWithoutPhoto(nome: String, bio: String, oferecer: Boolean) {
+    override fun onSaveWithoutPhoto(nome: String, bio: String) {
         FirestoreUserUtil.updateCurrentUser(nome,
                 FirebaseAuth.getInstance().currentUser?.email ?: "",
-                bio, null, oferecer)
+                bio, null)
         view.saveSucces()
     }
 
@@ -57,7 +49,7 @@ class PerfilPresenter(val view: PerfilContract.View): PerfilContract.Presenter {
 
     override fun onSetFields(context: Context) {
         FirestoreUserUtil.getCurrentUser({ user ->
-            view.setFieldsSucces(user.dono, user.nome, user.bio, user.picturePath)
+            view.setFieldsSucces(user.nome, user.bio, user.picturePath)
         }, context)
     }
 }

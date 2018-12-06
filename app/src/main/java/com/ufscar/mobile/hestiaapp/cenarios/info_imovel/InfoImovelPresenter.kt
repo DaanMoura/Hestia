@@ -11,12 +11,11 @@ import kotlinx.android.synthetic.main.activity_info_imovel.*
 
 class InfoImovelPresenter(val view: InfoImovelContract.View): InfoImovelContract.Presenter {
 
-    override fun onLoadFab(context: Context) {
-        if(FirebaseAuth.getInstance().currentUser != null) {
-            FirestoreUserUtil.getCurrentUser({ user ->
-                if(user.dono) view.showFabEdit()
-                else view.showFabFavorite()
-            }, context)
-        }
+    override fun onLoadFab(context: Context, showEdit: Boolean) {
+        if(showEdit)
+            view.showFabEdit()
+        else
+            view.showFabFavorite()
+
     }
 }
