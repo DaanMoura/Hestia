@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
@@ -15,6 +16,14 @@ import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 import kotlinx.android.synthetic.main.activity_info_imovel.*
 
 class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
+    override fun fillFavorite() {
+        fab_favorite.setImageDrawable(ContextCompat.getDrawable(baseContext, R.drawable.ic_favorite))
+    }
+
+    override fun unfillFavorite() {
+        fab_favorite.setImageDrawable(ContextCompat.getDrawable(baseContext, R.drawable.ic_favorite_border))
+    }
+
     private val EXTRA_IMOVEL = "Imovel"
     private val EXTRA_SHOW_EDIT = "ShowEdit"
     val presenter: InfoImovelContract.Presenter = InfoImovelPresenter(this)
@@ -23,10 +32,10 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_imovel)
 
-        val showEdit = intent.extras.getSerializable(EXTRA_SHOW_EDIT) as Boolean
-        presenter.onLoadFab(this, showEdit)
-
         val imovel = getIntent().getExtras().getSerializable(EXTRA_IMOVEL) as? Imovel
+
+        val showEdit = intent.extras.getSerializable(EXTRA_SHOW_EDIT) as Boolean
+        presenter.onLoadFab(this, showEdit, imovel)
 
         loadInfo(imovel)
 
@@ -40,6 +49,10 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
             }
         }
         //TODO: fazer ação "Conversar com o Dono"
+
+        fab_favorite.setOnClickListener {
+            presenter.onFavorite(imovel, this)
+        }
     }
 
     private fun loadInfo(imovel: Imovel?) {

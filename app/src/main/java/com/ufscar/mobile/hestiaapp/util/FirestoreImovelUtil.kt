@@ -45,14 +45,17 @@ object FirestoreImovelUtil {
         imovelFieldMap["uidDono"] = uidDono
         //TODO: adcionar o campo da foto
 
-        imoveisCollectionReference.add(imovelFieldMap)
+        imoveisCollectionReference.add(imovelFieldMap).addOnCompleteListener {task ->
+            val result = task.result
+            result?.update("id", result.id)
+        }
     }
 
     fun getAll(onComplete: (ArrayList<Imovel>) -> Unit) {
         val imoveis = ArrayList<Imovel>()
         imoveisCollectionReference.get().addOnCompleteListener {task ->
             if(task.isSuccessful) {
-                for(document in task.result) {
+                for(document in task.result!!) {
                     imoveis.add(document.toObject(Imovel::class.java))
                 }
                 onComplete(imoveis)
@@ -63,5 +66,4 @@ object FirestoreImovelUtil {
         }
     }
 
-//    fun getImovel(onComplete: ())
 }
