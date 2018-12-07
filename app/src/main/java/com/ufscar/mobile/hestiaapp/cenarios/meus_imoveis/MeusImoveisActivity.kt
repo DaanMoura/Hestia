@@ -24,7 +24,6 @@ import org.jetbrains.anko.*
 import kotlin.collections.ArrayList
 
 class MeusImoveisActivity : AppCompatActivity(), MeusImoveisContract.View {
-    //Sign in request code
     private val REQUEST_INFO = 3
     private val EXTRA_IMOVEL = "Imovel"
     private val EXTRA_SHOW_EDIT = "ShowEdit"
@@ -51,6 +50,7 @@ class MeusImoveisActivity : AppCompatActivity(), MeusImoveisContract.View {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         //Setting adapter
         val adapter = CardAdapter(imoveis)
+        recyclerView.adapter = adapter
         adapter.setOnClick { imovel, index ->
             val openInfo = Intent(this, InfoImovelActivity::class.java)
             openInfo.putExtra(EXTRA_IMOVEL, imovel)
@@ -59,7 +59,6 @@ class MeusImoveisActivity : AppCompatActivity(), MeusImoveisContract.View {
 //            val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_fade_in, R.anim.abc_fade_out)
             startActivityForResult(openInfo, REQUEST_INFO)
         }
-        recyclerView.adapter = adapter
     }
 
     override fun hideLoading() {
@@ -69,31 +68,6 @@ class MeusImoveisActivity : AppCompatActivity(), MeusImoveisContract.View {
     override fun onResume() {
         super.onResume()
         presenter.onListUpdate()
-    }
-
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    //Hadling the options item (We should keep it?)
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
-        }
     }
 
 }

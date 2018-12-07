@@ -19,6 +19,7 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.adapter.CardAdapter
+import com.ufscar.mobile.hestiaapp.cenarios.favoritos.FavoritosActivity
 import com.ufscar.mobile.hestiaapp.cenarios.info_imovel.InfoImovelActivity
 import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
 import com.ufscar.mobile.hestiaapp.cenarios.perfil.PerfilActivity
@@ -217,7 +218,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             //TODO: make "Minha Lista" and put intent below
             R.id.nav_list -> {
-                Toast.makeText(this, "Minha Lista", Toast.LENGTH_SHORT).show()
+                startActivity(intentFor<FavoritosActivity>())
             }
 
             //TODO: make FAQ and put intent below
