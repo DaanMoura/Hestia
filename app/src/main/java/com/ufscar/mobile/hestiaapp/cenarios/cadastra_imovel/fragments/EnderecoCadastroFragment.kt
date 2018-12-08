@@ -11,6 +11,16 @@ import com.ufscar.mobile.hestiaapp.R
 
 class EnderecoCadastroFragment : Fragment() {
 
+    companion object {
+        private val ARG_MAP = "arg_map"
+        fun newInstance(cadastroMap: HashMap<String,Any>) =
+                EnderecoCadastroFragment().apply {
+                    arguments = Bundle().apply {
+                        putSerializable(ARG_MAP, cadastroMap)
+                    }
+                }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
