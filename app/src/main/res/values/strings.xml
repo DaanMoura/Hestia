@@ -25,7 +25,7 @@
     <string name="informacoes_do_imovel">Informações do Imovel</string>
     <string name="logradouro">Logradouro</string>
     <string name="tipo_do_imovel">Tipo do Imóvel</string>
-    <string name="preco">Preço</string>
+    <string name="preco">Preço (R$)</string>
     <string name="max_moradores">Nº Máximo de moradores</string>
     <string name="_1">0</string>
     <string name="vagas_garagem">Nº Vagas na garagem</string>
@@ -55,4 +55,23 @@
     <string name="faq">FAQ</string>
     <string name="contato">Contato</string>
     <string name="favoritos">Favoritos</string>
+    <string name="hint_titulo">Título Personalizado (opcional)</string>
+    <string name="endereco">Endereço</string>
+    <string name="rua">Rua</string>
+    <string name="cidade">Cidade</string>
+    <string name="estado">Estado</string>
+    <string name="numero">Número</string>
+    <string name="complemento">Complemento</string>
+    <string name="referencia">Referência</string>
+    <string name="voltar">voltar</string>
+
+    <string-array name="tipos_imovel">
+        <item>Casa</item>
+        <item>Apartamento</item>
+        <item>República</item>
+        <item>Kitinete</item>
+        <item>Outro</item>
+    </string-array>
+
+
 </resources>

@@ -4,10 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
 import com.ufscar.mobile.hestiaapp.R
-import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
 import kotlinx.android.synthetic.main.fragment_cadastra_info_imovel.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.newTask
