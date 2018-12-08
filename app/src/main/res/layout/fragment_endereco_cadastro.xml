@@ -84,7 +84,7 @@
             android:layout_margin="4dp"
             android:fontFamily="@font/googlesans"
             android:textColor="@color/primaryText"
-            android:text="@string/info_form_desc" />
+            android:text="@string/descricaoTitle" />
 
         <EditText
             android:id="@+id/edtDesc"

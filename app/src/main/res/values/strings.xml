@@ -33,7 +33,7 @@
     <string name="n_banheiros">Nº Banheiros</string>
     <string name="n_salas">Nº Salas</string>
     <string name="n_cozinhas">Nº Cozinhas</string>
-    <string name="info_form_desc">Descrição</string>
+    <string name="info_form_desc">Descrição (opcional)</string>
     <string name="prosseguir">Prosseguir</string>
     <string name="evie_fotos">Envie pelo menos 3 fotos</string>
     <string name="localizacao">Localização</string>
@@ -61,9 +61,10 @@
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
     <string name="numero">Número</string>
-    <string name="complemento">Complemento</string>
-    <string name="referencia">Referência</string>
+    <string name="complemento">Complemento (opcional)</string>
+    <string name="referencia">Referência (opcional)</string>
     <string name="voltar">voltar</string>
+    <string name="descricaoTitle">Descrição</string>
 
     <string-array name="tipos_imovel">
         <item>Casa</item>

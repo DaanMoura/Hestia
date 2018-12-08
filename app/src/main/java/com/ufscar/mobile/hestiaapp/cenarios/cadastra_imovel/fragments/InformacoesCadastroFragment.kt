@@ -13,6 +13,16 @@ import kotlinx.android.synthetic.main.fragment_informacoes_cadastro.*
 
 class InformacoesCadastroFragment : Fragment() {
 
+    companion object {
+        private val ARG_MAP = "arg_map"
+        fun newInstance(infoMap: HashMap<String,Any>?) =
+                InformacoesCadastroFragment().apply {
+                    arguments = Bundle().apply {
+                        putSerializable(ARG_MAP, infoMap)
+                    }
+                }
+    }
+
     private val REQUIRED_FIELD = "Campo obrigatório"
     var listener: onFragmentInteractionListener? = null
 
@@ -24,6 +34,18 @@ class InformacoesCadastroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val argMap = arguments?.getSerializable(ARG_MAP) as HashMap<String,Any>?
+        if(argMap != null) {
+            edtTitle.setText(argMap["title"] as String)
+            spinnerTipo.prompt = argMap["tipo"] as String
+            edtPreco.setText(argMap["preco"] as String)
+            edtMoradores.setText(argMap["moradores"] as String)
+            edtQuartos.setText(argMap["quartos"] as String)
+            edtBanheiros.setText(argMap["banheiros"] as String)
+            edtSalas.setText(argMap["sala"] as String)
+            edtVagas.setText(argMap["vagas"] as String)
+        }
 
         val infoMap:HashMap<String,Any> = HashMap()
 
@@ -38,7 +60,7 @@ class InformacoesCadastroFragment : Fragment() {
 
         prosseguir.setOnClickListener {
             if(verifyPreco()) {
-                listener?.onProsseguirInteraction(infoMap)
+                listener?.onProsseguirEnderecoInteraction(infoMap)
             }
         }
     }
@@ -69,9 +91,6 @@ class InformacoesCadastroFragment : Fragment() {
     }
 
     interface onFragmentInteractionListener {
-        fun onProsseguirInteraction(infoMap: HashMap<String,Any>)
+        fun onProsseguirEnderecoInteraction(infoMap: HashMap<String,Any>)
     }
-
-
-
 }
