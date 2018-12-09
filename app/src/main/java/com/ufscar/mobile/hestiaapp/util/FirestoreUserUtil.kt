@@ -43,12 +43,15 @@ object FirestoreUserUtil {
         addFavoriteToArrayMap.put("favoritos", FieldValue.arrayUnion(favorito))
 
         currentUserDocRef.update(addFavoriteToArrayMap)
+        FirestoreImovelUtil.updateInteressados(favorito, 1)
+
     }
 
     fun removeFavorite(favorito: String) {
         val removeFavoriteToMapArray = mutableMapOf<String, Any>()
         removeFavoriteToMapArray.put("favoritos", FieldValue.arrayRemove(favorito))
         currentUserDocRef.update(removeFavoriteToMapArray)
+        FirestoreImovelUtil.updateInteressados(favorito, -1)
     }
 
     fun getCurrentUser(onComplete: (User) -> Unit, context: Context) {
