@@ -3,6 +3,7 @@ package com.ufscar.mobile.hestiaapp.cenarios.cadastra_imovel
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.cenarios.cadastra_imovel.fragments.EnderecoCadastroFragment
@@ -20,26 +21,28 @@ class CadastraImovelActivity : AppCompatActivity(), CadastraImovelContract.View,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastra_imovel)
 
+        val fragment = InformacoesCadastroFragment.newInstance(null, null)
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fmMaster, InformacoesCadastroFragment())
+                .replace(R.id.fmMaster, fragment)
                 .commit()
     }
 
-    override fun onProsseguirEnderecoInteraction(infoMap: HashMap<String,Any>) {
-        val fragment = EnderecoCadastroFragment.newInstance(infoMap)
+    override fun onProsseguirEnderecoInteraction(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>?) {
+        Toast.makeText(this, infoMap.toString(), Toast.LENGTH_SHORT).show()
+        val fragment = EnderecoCadastroFragment.newInstance(infoMap, enderecoMap)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fmMaster, fragment)
                 .addToBackStack(null)
                 .commit()
     }
 
-    override fun onProsseguirFotosInteraction(enderecoMap: HashMap<String, Any>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onProsseguirFotosInteraction() {
+        Toast.makeText(this, "Fotos", Toast.LENGTH_SHORT).show()
     }
 
 
-    override fun onVoltarInfoInteraction(infoMap: HashMap<String, Any>) {
-        val fragment = InformacoesCadastroFragment.newInstance(HashMap())
+    override fun onVoltarInfoInteraction(infoMap: HashMap<String, Any>, enderecoMap: HashMap<String, Any>?) {
+        val fragment = InformacoesCadastroFragment.newInstance(infoMap, enderecoMap)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fmMaster, fragment)
                 .commit()

@@ -3,7 +3,6 @@ package com.ufscar.mobile.hestiaapp.cenarios.cadastra_imovel
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.R.id.*
 import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
-import kotlinx.android.synthetic.main.fragment_cadastra_info_imovel.*
 
 class CadastraImovelPresenter(val view: CadastraImovelContract.View): CadastraImovelContract.Presenter  {
     override fun onInsertImovel(tipo: String,moradores: Int,preco: Int,quartos: Int,

@@ -18,11 +18,13 @@ class EnderecoCadastroFragment : Fragment() {
     var listener: EnderecoCadastroFragment.onFragmentInteractionListener? = null
 
     companion object {
-        private val ARG_MAP = "arg_map"
-        fun newInstance(enderecoMap: HashMap<String,Any>) =
+        private val ARG_INFO_MAP = "arg_map"
+        private val ARG_ENDERECO_MAP = "arg_map2"
+        fun newInstance(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>?) =
             EnderecoCadastroFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_MAP, enderecoMap)
+                    putSerializable(ARG_INFO_MAP, infoMap)
+                    putSerializable(ARG_ENDERECO_MAP, enderecoMap)
                 }
             }
     }
@@ -36,8 +38,36 @@ class EnderecoCadastroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val enderecoMap: HashMap<String, Any> = HashMap()
+        val argMap = arguments?.getSerializable(ARG_ENDERECO_MAP) as HashMap<String,Any>?
+        if(argMap != null) {
+            edtCidade.setText(argMap.getValue("cidade").toString())
+            edtRua.setText(argMap.getValue("rua").toString())
+            if("numero" in argMap) {
+                edtNumero.setText(argMap.getValue("numero").toString())
+            }
+            edtComplemento.setText(argMap.getValue("complemento").toString())
+            edtReferencia.setText(argMap.getValue("referencia").toString())
+            edtDesc.setText(argMap.getValue("descricao").toString())
+        }
 
+        voltar.setOnClickListener {
+            val enderecoMap: HashMap<String, Any> = HashMap()
+            enderecoMap["cidade"] = edtCidade.text ?: ""
+            enderecoMap["rua"] = edtRua.text ?: ""
+            if(!edtNumero.text.isNullOrEmpty()) {
+                enderecoMap["numero"] = edtNumero.text.toString().toInt()
+            }
+            enderecoMap["complemento"] = edtComplemento.text ?: ""
+            enderecoMap["referencia"] = edtReferencia.text ?: ""
+            enderecoMap["descricao"] = edtDesc.text ?: ""
+            listener?.onVoltarInfoInteraction(getInfoMap(), enderecoMap)
+        }
+
+        prosseguir.setOnClickListener {
+            if(verifyFields()) {
+                listener?.onProsseguirFotosInteraction()
+            }
+        }
     }
 
     fun verifyFields(): Boolean {
@@ -57,14 +87,13 @@ class EnderecoCadastroFragment : Fragment() {
         return result
     }
 
-    fun getMap(): HashMap<String,Any> {
-        val map = arguments?.getSerializable(ARG_MAP) as HashMap<String,Any>?
+    fun getInfoMap(): HashMap<String,Any> {
+        val map = arguments?.getSerializable(ARG_INFO_MAP) as HashMap<String,Any>?
         if(map == null) {
             throw NullPointerException("Info Map can not be null")
         }
         return map
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -83,7 +112,7 @@ class EnderecoCadastroFragment : Fragment() {
     }
 
     interface onFragmentInteractionListener {
-        fun onProsseguirFotosInteraction(enderecoMap: HashMap<String,Any>)
-        fun onVoltarInfoInteraction(infoMap: HashMap<String,Any>)
+        fun onProsseguirFotosInteraction()
+        fun onVoltarInfoInteraction(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>?)
     }
 }

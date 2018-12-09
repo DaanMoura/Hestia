@@ -35,11 +35,18 @@
             tools:ignore="Autofill" />
 
         <!--TODO: Trocar o EditText abaixo para Spinner-->
-        <Spinner
-            android:id="@+id/spinnerTipo"
-            android:entries="@array/tipos_imovel"
+        <!--<Spinner-->
+            <!--android:id="@+id/spinnerTipo"-->
+            <!--android:entries="@array/tipos_imovel"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="36dp" />-->
+        <EditText
+            android:id="@+id/edtTipo"
             android:layout_width="match_parent"
-            android:layout_height="36dp" />
+            android:layout_height="wrap_content"
+            android:hint="@string/tipo_do_imovel"
+            android:inputType="textPostalAddress"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/edtPreco"
