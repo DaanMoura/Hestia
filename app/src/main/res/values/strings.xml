@@ -65,6 +65,7 @@
     <string name="referencia">Referência (opcional)</string>
     <string name="voltar">voltar</string>
     <string name="descricaoTitle">Descrição</string>
+    <string name="placeholder_ref">Ponto de Referência</string>
 
     <string-array name="tipos_imovel">
         <item>Casa</item>

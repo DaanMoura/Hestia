@@ -26,6 +26,14 @@
                 android:text="@string/default_card_title"
                 android:textColor="@color/primaryText"
                 android:textSize="40sp" />
+            <TextView
+                android:id="@+id/info_tipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/googlesans"
+                android:text="@string/default_card_title"
+                android:textColor="@color/primaryText"
+                android:textSize="24sp" />
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
@@ -106,6 +114,15 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/info_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/default_short_description"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/info_comodos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,11 +133,11 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/info_desc"
+                android:id="@+id/info_referencia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/default_short_description"
+                android:text="@string/placeholder_ref"
                 android:textColor="@color/primaryText"
                 android:textSize="16sp" />
 

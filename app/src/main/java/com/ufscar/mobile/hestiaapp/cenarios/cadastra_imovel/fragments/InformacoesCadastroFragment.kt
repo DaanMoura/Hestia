@@ -47,6 +47,7 @@ class InformacoesCadastroFragment : Fragment() {
             edtQuartos.setText(argMap.getValue("quartos").toString())
             edtBanheiros.setText(argMap.getValue("banheiros").toString())
             edtSalas.setText(argMap.getValue("sala").toString())
+            edtCozinhas.setText(argMap.getValue("cozinhas").toString())
             edtVagas.setText(argMap.getValue("vagas").toString())
         }
 
@@ -60,6 +61,7 @@ class InformacoesCadastroFragment : Fragment() {
                 infoMap["quartos"] = edtQuartos.text.toString().toInt()
                 infoMap["banheiros"] = edtBanheiros.text.toString().toInt()
                 infoMap["sala"] = edtSalas.text.toString().toInt()
+                infoMap["cozinhas"] = edtCozinhas.text.toString().toInt()
                 infoMap["vagas"] = edtVagas.text.toString().toInt()
                 val argMap = arguments?.getSerializable(ARG_ENDERECO_MAP) as HashMap<String, Any>?
                 listener?.onProsseguirEnderecoInteraction(infoMap, argMap)

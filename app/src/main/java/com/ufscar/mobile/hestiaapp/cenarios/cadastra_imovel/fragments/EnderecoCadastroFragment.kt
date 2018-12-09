@@ -65,7 +65,18 @@ class EnderecoCadastroFragment : Fragment() {
 
         prosseguir.setOnClickListener {
             if(verifyFields()) {
-                listener?.onProsseguirFotosInteraction()
+                val enderecoMap: HashMap<String, Any> = HashMap()
+
+                enderecoMap["cidade"] = edtCidade.text ?: ""
+                enderecoMap["rua"] = edtRua.text ?: ""
+                if(!edtNumero.text.isNullOrEmpty()) {
+                    enderecoMap["numero"] = edtNumero.text.toString().toInt()
+                }
+                enderecoMap["complemento"] = edtComplemento.text ?: ""
+                enderecoMap["referencia"] = edtReferencia.text ?: ""
+                enderecoMap["descricao"] = edtDesc.text ?: ""
+
+                listener?.onProsseguirFotosInteraction(getInfoMap(), enderecoMap)
             }
         }
     }
@@ -112,7 +123,7 @@ class EnderecoCadastroFragment : Fragment() {
     }
 
     interface onFragmentInteractionListener {
-        fun onProsseguirFotosInteraction()
+        fun onProsseguirFotosInteraction(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>)
         fun onVoltarInfoInteraction(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>?)
     }
 }

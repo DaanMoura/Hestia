@@ -38,20 +38,18 @@ class CardAdapter(val imovelList: ArrayList<Imovel>) : RecyclerView.Adapter<Card
     //Create a view holder
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(imovel: Imovel, onClickListener: ((imovel: Imovel, index: Int) -> Unit)?) {
-            itemView.tvTitle.text = imovel.title
+            if(imovel.title != null) {
+                itemView.tvTitle.text = imovel.title
+            } else {
+                itemView.tvTitle.text = imovel.tipo
+            }
             itemView.tvMoradores.text = "Moradores: ${imovel.min}/${imovel.max}"
             itemView.tvInteressados.text = "Interessados: ${imovel.interessados}"
             itemView.cardFoto.setImageBitmap(imovel.bmFoto)
             itemView.tvPreco.text = "R$ ${imovel.preco},00"
-            itemView.tvComodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas"
+            itemView.tvComodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas, ${imovel.cozinhas} cozinhas"
             itemView.tvDesc.text = imovel.descricao
             itemView.checkInteressados as CheckBox
-            /*val card = itemView.card as CardView
-            if (adapterPosition == 0) {
-                val params: ViewGroup.MarginLayoutParams = card.layoutParams as ViewGroup.MarginLayoutParams
-                params.setMargins(32, 72, 32, 80) // I dunno why worked with top: 72 and bottom: 80
-                card.layoutParams = params
-            }*/
 
             if (onClickListener != null) {
                 itemView.setOnClickListener {

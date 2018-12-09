@@ -35,8 +35,25 @@ class CadastraImovelActivity : AppCompatActivity(), CadastraImovelContract.View,
                 .commit()
     }
 
-    override fun onProsseguirFotosInteraction() {
-        Toast.makeText(this, "Fotos", Toast.LENGTH_SHORT).show()
+    override fun onProsseguirFotosInteraction(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>) {
+
+        presenter.onInsertImovel(infoMap.getValue("title").toString(),
+                infoMap.getValue("tipo").toString(),
+                enderecoMap.getValue("cidade").toString(),
+                enderecoMap.getValue("rua").toString(),
+                enderecoMap.getValue("numero").toString().toInt(),
+                enderecoMap.getValue("complemento").toString(),
+                enderecoMap.getValue("referencia").toString(),
+                infoMap.getValue("moradores").toString().toInt(),
+                0,
+                infoMap.getValue("preco").toString().toInt(),
+                infoMap.getValue("quartos").toString().toInt(),
+                infoMap.getValue("banheiros").toString().toInt(),
+                infoMap.getValue("sala").toString().toInt(),
+                infoMap.getValue("cozinhas").toString().toInt(),
+                infoMap.getValue("vagas").toString().toInt(),
+                enderecoMap.getValue("descricao").toString())
+        Toast.makeText(this,"Inserido, falta ir pra fotos",Toast.LENGTH_SHORT).show()
     }
 
 
@@ -47,7 +64,7 @@ class CadastraImovelActivity : AppCompatActivity(), CadastraImovelContract.View,
                 .commit()
     }
 
-    override fun insertSuccess() {
+    override fun insertFinished() {
         val intentDono = Intent(this, MeusImoveisActivity::class.java)
         intentDono.newTask().clearTask()
         startActivity(intentDono)
