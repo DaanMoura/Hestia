@@ -28,7 +28,6 @@ class CadastraImovelActivity : AppCompatActivity(), CadastraImovelContract.View,
     }
 
     override fun onProsseguirEnderecoInteraction(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>?) {
-        Toast.makeText(this, infoMap.toString(), Toast.LENGTH_SHORT).show()
         val fragment = EnderecoCadastroFragment.newInstance(infoMap, enderecoMap)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fmMaster, fragment)

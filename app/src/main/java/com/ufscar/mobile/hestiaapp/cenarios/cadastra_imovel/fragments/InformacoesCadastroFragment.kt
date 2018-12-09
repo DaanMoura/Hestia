@@ -40,9 +40,6 @@ class InformacoesCadastroFragment : Fragment() {
 
         val argMap = arguments?.getSerializable(ARG_MAP) as HashMap<String,Any>?
         if(argMap != null) {
-            activity?.let {
-                Toast.makeText(it, argMap.toString(), Toast.LENGTH_SHORT).show()
-            }
             edtTitle.setText(argMap.getValue("title").toString())
             edtTipo.setText(argMap.getValue("tipo").toString())
             edtPreco.setText(argMap.getValue("preco").toString())
