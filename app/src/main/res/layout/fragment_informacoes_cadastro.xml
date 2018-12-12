@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <requestFocus/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:layout_margin="4dp"
+            android:fontFamily="@font/googlesans"
+            android:textColor="@color/primaryText"
+            android:text="@string/informacoes_do_imovel" />
+
+        <EditText
+            android:id="@+id/edtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_titulo"
+            android:inputType="textPostalAddress"
+            tools:ignore="Autofill" />
+
+        <!--TODO: Trocar o EditText abaixo para Spinner-->
+        <!--<Spinner-->
+            <!--android:id="@+id/spinnerTipo"-->
+            <!--android:entries="@array/tipos_imovel"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="36dp" />-->
+        <EditText
+            android:id="@+id/edtTipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tipo_do_imovel"
+            android:inputType="textPostalAddress"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/edtPreco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/preco"
+            android:inputType="numberDecimal"
+            tools:ignore="Autofill" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/edtMoradores"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="@string/zero"
+                android:hint="@string/_1"
+                android:inputType="number"
+                tools:ignore="Autofill" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                android:paddingStart="8dp"
+                android:text="@string/max_moradores"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/edtVagas"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="@string/zero"
+                android:hint="@string/_1"
+                android:inputType="number"
+                tools:ignore="Autofill"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/vagas_garagem"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/edtQuartos"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="@string/zero"
+                android:hint="@string/_1"
+                android:inputType="number"
+                tools:ignore="Autofill"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/n_quartos"    />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/edtBanheiros"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="@string/zero"
+                android:hint="@string/_1"
+                android:inputType="number"
+                tools:ignore="Autofill"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/n_banheiros"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/edtSalas"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="@string/zero"
+                android:hint="@string/_1"
+                android:inputType="number"
+                tools:ignore="Autofill"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/n_salas"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/edtCozinhas"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="@string/zero"
+                android:hint="@string/_1"
+                android:inputType="number"
+                tools:ignore="Autofill"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/n_cozinhas"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/prosseguir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_button_primary"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="@string/prosseguir"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
+</android.support.design.widget.CoordinatorLayout>

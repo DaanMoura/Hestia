@@ -19,6 +19,7 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.adapter.CardAdapter
+import com.ufscar.mobile.hestiaapp.cenarios.favoritos.FavoritosActivity
 import com.ufscar.mobile.hestiaapp.cenarios.info_imovel.InfoImovelActivity
 import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
 import com.ufscar.mobile.hestiaapp.cenarios.perfil.PerfilActivity
@@ -35,11 +36,16 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View {
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
     //Sign in request code
     private val RC_SIGN_IN = 1
     private val REQUEST_INFO = 3
     private val REQUEST_PERFIL = 4
     private val EXTRA_IMOVEL = "Imovel"
+    private val EXTRA_SHOW_EDIT = "ShowEdit"
 
     val presenter: MainContract.Presenter = MainPresenter(this)
 
@@ -60,9 +66,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Marking the selected item
         nav_view.setNavigationItemSelectedListener(this)
-
-        //Populating imoveisList
-        //TODO: Migrate this to Firebase
     }
 
     override fun updateDrawerSuccess(nome: String, email: String, picturePath: String?) {
@@ -88,10 +91,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val recyclerView = rvCard as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         //Setting adapter
-        val adapter = CardAdapter(imoveis)
+        val adapter = CardAdapter(this,imoveis)
         adapter.setOnClick { imovel, index ->
             val openInfo = Intent(this, InfoImovelActivity::class.java)
             openInfo.putExtra(EXTRA_IMOVEL, imovel)
+            openInfo.putExtra(EXTRA_SHOW_EDIT, false)
             //Teste de animação (Apenas para >= Android 5.0)
 //            val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_fade_in, R.anim.abc_fade_out)
             startActivityForResult(openInfo, REQUEST_INFO)
@@ -103,10 +107,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onResume()
         presenter.onUpdateList()
         presenter.onUpdateDrawer(this)
-    }
-
-    override fun showMeusImoveisItem() {
-        nav_view.menu.findItem(R.id.nav_imoveis).setVisible(true)
     }
 
     override fun showLoading() {
@@ -143,27 +143,55 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivityForResult(intent, RC_SIGN_IN)
     }
 
-    override fun entrarFailed() {
-        Toast.makeText(this, "Já conectado", Toast.LENGTH_SHORT).show() // TODO: Substituir por logout
-    }
-
     override fun perfilSuccess() {
         val editPerfil = Intent(this, PerfilActivity::class.java)
         startActivityForResult(editPerfil, REQUEST_PERFIL)
-    }
-
-    override fun perfilFailed() {
-        // Talvez substituir por uma activity de "Sem conta :("
-        Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
     }
 
     override fun imoveisSuccess() {
         startActivity(intentFor<MeusImoveisActivity>())
     }
 
-    override fun imoveisFailed() {
-        Toast.makeText(this, "Por favor, faça o log in primeiro", Toast.LENGTH_SHORT).show()
+    override fun hideEntrar() {
+        nav_view.menu.findItem(R.id.nav_entrar).setVisible(false)
     }
+
+    override fun showEntrar() {
+        nav_view.menu.findItem(R.id.nav_entrar).setVisible(true)
+    }
+
+    override fun hidePerfil() {
+        nav_view.menu.findItem(R.id.nav_perfil).setVisible(false)
+    }
+
+    override fun showPerfil() {
+        nav_view.menu.findItem(R.id.nav_perfil).setVisible(true)
+    }
+
+    override fun showMeusImoveis() {
+        nav_view.menu.findItem(R.id.nav_imoveis).setVisible(true)
+    }
+
+    override fun hideMeusImoveis() {
+        nav_view.menu.findItem(R.id.nav_imoveis).setVisible(false)
+    }
+
+    override fun hidePreferencias() {
+        nav_view.menu.findItem(R.id.nav_pref).setVisible(false)
+    }
+
+    override fun showPreferencias() {
+        nav_view.menu.findItem(R.id.nav_pref).setVisible(true)
+    }
+
+    override fun hideFavoritos() {
+        nav_view.menu.findItem(R.id.nav_list).setVisible(false)
+    }
+
+    override fun showFavoritos() {
+        nav_view.menu.findItem(R.id.nav_list).setVisible(true)
+    }
+
 
     //Handling the navigation drawer items
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -190,7 +218,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             //TODO: make "Minha Lista" and put intent below
             R.id.nav_list -> {
-                Toast.makeText(this, "Minha Lista", Toast.LENGTH_SHORT).show()
+                startActivity(intentFor<FavoritosActivity>())
             }
 
             //TODO: make FAQ and put intent below

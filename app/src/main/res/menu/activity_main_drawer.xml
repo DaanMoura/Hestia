@@ -10,7 +10,7 @@
             android:title="@string/entrar" />
         <item
             android:id="@+id/nav_perfil"
-            android:icon="@drawable/ic_person"
+            android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/perfil" />
         <item
             android:id="@+id/nav_pref"
@@ -18,12 +18,11 @@
             android:title="@string/prefer_ncias" />
         <item
             android:id="@+id/nav_list"
-            android:icon="@drawable/ic_list"
-            android:title="@string/minha_lista" />
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/favoritos" />
         <item
             android:id="@+id/nav_imoveis"
             android:icon="@drawable/ic_list"
-            android:visible="false"
             android:title="@string/meusimoveis" />
     </group>
 

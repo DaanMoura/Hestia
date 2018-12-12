@@ -3,6 +3,7 @@ package com.ufscar.mobile.hestiaapp.util
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ufscar.mobile.hestiaapp.model.User
 
@@ -18,7 +19,8 @@ object FirestoreUserUtil {
                 val newUser = User(FirebaseAuth.getInstance().currentUser?.displayName ?: "",
                         FirebaseAuth.getInstance().currentUser?.email ?: "",
                         "",
-                        null, false)
+                        null,
+                        arrayListOf())
                 currentUserDocRef.set(newUser).addOnSuccessListener {
                     onComplete()
                 }
@@ -26,14 +28,30 @@ object FirestoreUserUtil {
         }
     }
 
-    fun updateCurrentUser(nome: String = "", email: String = "", bio: String = "", picturePath: String? = null, dono: Boolean = false) {
+    fun updateCurrentUser(nome: String = "", email: String = "", bio: String = "",
+                          picturePath: String? = null) {
         val userFieldMap = mutableMapOf<String, Any>()
         if (nome.isNotBlank()) userFieldMap["nome"] = nome
         if (email.isNotBlank()) userFieldMap["email"] = email
         if (bio.isNotBlank()) userFieldMap["bio"] = bio
         if (picturePath != null) userFieldMap["picturePath"] = picturePath
-        userFieldMap["dono"] = dono
         currentUserDocRef.update(userFieldMap)
+    }
+
+    fun addFavorite(favorito: String) {
+        val addFavoriteToArrayMap = mutableMapOf<String, Any>()
+        addFavoriteToArrayMap.put("favoritos", FieldValue.arrayUnion(favorito))
+
+        currentUserDocRef.update(addFavoriteToArrayMap)
+        FirestoreImovelUtil.updateInteressados(favorito, 1)
+
+    }
+
+    fun removeFavorite(favorito: String) {
+        val removeFavoriteToMapArray = mutableMapOf<String, Any>()
+        removeFavoriteToMapArray.put("favoritos", FieldValue.arrayRemove(favorito))
+        currentUserDocRef.update(removeFavoriteToMapArray)
+        FirestoreImovelUtil.updateInteressados(favorito, -1)
     }
 
     fun getCurrentUser(onComplete: (User) -> Unit, context: Context) {

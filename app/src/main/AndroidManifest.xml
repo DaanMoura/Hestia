@@ -14,7 +14,7 @@
             android:label="@string/app_name"
             android:theme="@style/MainTheme.NoActionBar" />
         <activity
-            android:name="com.ufscar.mobile.hestiaapp.cenarios.info_imovel.InfoImovelActivity"
+            android:name=".cenarios.info_imovel.InfoImovelActivity"
             android:label="Detalhes"
             android:theme="@style/AppTheme" />
         <activity android:name=".cenarios.perfil.PerfilActivity" />
@@ -30,8 +30,11 @@
         <activity
             android:name=".cenarios.meus_imoveis.MeusImoveisActivity"
             android:theme="@style/MainTheme.NoActionBar" />
-        <activity android:name="com.ufscar.mobile.hestiaapp.cenarios.cadastra_imovel.CadastraImovelActivity"
-            android:label="Cadastro"/>
+        <activity
+            android:name=".cenarios.cadastra_imovel.CadastraImovelActivity"
+            android:label="Cadastro" />
+        <activity android:name=".cenarios.favoritos.FavoritosActivity"
+            android:theme="@style/MainTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

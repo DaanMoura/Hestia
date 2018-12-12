@@ -86,49 +86,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:targetApi="lollipop" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        android:text="@string/voc_deseja"
-        android:textColor="@color/primaryText"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editBio"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="148dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <RadioButton
-            android:id="@+id/procurar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/radio_procurar_vagas"
-            android:textSize="16sp" />
-
-        <RadioButton
-            android:id="@+id/oferecer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/radio_oferecer_vagas"
-            android:textSize="16sp" />
-    </RadioGroup>
 
 
 </android.support.constraint.ConstraintLayout>
