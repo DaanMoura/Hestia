@@ -57,7 +57,6 @@ object FirestoreUserUtil {
     fun getCurrentUser(onComplete: (User) -> Unit, context: Context) {
         currentUserDocRef.get()
                 .addOnSuccessListener {
-                    //                    Toast.makeText(context, "Usuário carregado", Toast.LENGTH_SHORT).show()
                     onComplete(it.toObject(User::class.java)!!)
                 }
     }

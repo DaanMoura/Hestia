@@ -8,7 +8,6 @@ interface PerfilContract {
         fun changePhotoSuccess()
         fun saveSucces()
         fun showProgressBar()
-        fun setUploadProgress(progress: Int)
         fun logoutSucces()
         fun setFieldsSucces(nome: String, bio: String, picturePath: String?)
     }

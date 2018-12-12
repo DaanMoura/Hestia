@@ -67,7 +67,7 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
             info_price.text = "R$ ${imovel.preco},00"
             info_moradores.text = "Moradores: ${imovel.min}/${imovel.max}"
             info_interessados.text = "Interessados: ${imovel.interessados}"
-            info_comodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas, ${imovel.cozinhas} cozinhas"
+            info_comodos.text = formatarComodos(imovel)
             info_desc.text = imovel.descricao
             if(!imovel.referencia.isNullOrEmpty()) {
                 info_referencia.text = "Ponto de referência: ${imovel.referencia}"
@@ -85,11 +85,41 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
         }
     }
 
+    fun formatarComodos(imovel: Imovel): String {
+        var str = ""
+
+        if(imovel.quartos == 1)
+            str = str + "1 quarto"
+        else if(imovel.quartos > 1)
+            str = str + "${imovel.quartos} quartos"
+
+        if(imovel.banheiros == 1)
+            str = str + ", 1 banheiro"
+        else if(imovel.banheiros > 1)
+            str = str + ", ${imovel.banheiros} banheiros"
+
+        if(imovel.salas == 1)
+            str = str + ", 1 sala"
+        else if(imovel.salas > 1)
+            str = str + ", ${imovel.salas} salas"
+
+        if(imovel.cozinhas == 1)
+            str = str + ", 1 cozinha"
+        else if(imovel.cozinhas > 1)
+            str = str + ", ${imovel.cozinhas} cozinhas"
+
+        if(imovel.vaga == 1)
+            str = str + " e 1 vaga na garagem"
+        else if(imovel.vaga > 1)
+            str = str + " e ${imovel.vaga} vagas na garagem"
+
+        return str
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
 
         val volta = Intent(this, MainActivity::class.java)
-//        val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom)
         setResult(Activity.RESULT_OK, volta)
         finish()
     }

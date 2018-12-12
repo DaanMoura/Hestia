@@ -1,15 +1,8 @@
 package com.ufscar.mobile.hestiaapp.util
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.provider.ContactsContract
-import android.widget.Toast
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ufscar.mobile.hestiaapp.model.Imovel
-import com.ufscar.mobile.hestiaapp.model.User
 
 object FirestoreImovelUtil {
     private val firestoreInstance: FirebaseFirestore by lazy { FirebaseFirestore.getInstance()}
@@ -80,9 +73,7 @@ object FirestoreImovelUtil {
                     imoveis.add(document.toObject(Imovel::class.java))
                 }
                 onComplete(imoveis)
-//                Toast.makeText(context, "Dados carregados com sucesso", Toast.LENGTH_SHORT).show()
             } else {
-//                Toast.makeText(context, "Falha ao carregar dados", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cidade"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords"
             tools:ignore="Autofill" />
 
         <LinearLayout
@@ -46,7 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/rua"
-                android:inputType="textPostalAddress"
+                android:inputType="textCapWords"
                 tools:ignore="Autofill" />
 
             <EditText
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/complemento"
-            android:inputType="textPostalAddress"
+            android:inputType="textCapWords"
             tools:ignore="Autofill" />
 
         <EditText
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/referencia"
-            android:inputType="textPostalAddress"
+            android:inputType="textCapSentences"
             tools:ignore="Autofill" />
 
         <TextView
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/info_form_desc"
             android:imeOptions="actionDone"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences"
             tools:ignore="Autofill" />
     </LinearLayout>
 

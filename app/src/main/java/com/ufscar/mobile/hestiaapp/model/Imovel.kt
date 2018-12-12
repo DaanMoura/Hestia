@@ -1,6 +1,5 @@
 package com.ufscar.mobile.hestiaapp.model
 
-import android.graphics.Bitmap
 import java.io.Serializable
 
 data class Imovel(val title: String?,
