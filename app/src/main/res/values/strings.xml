@@ -69,6 +69,7 @@
     <string name="add_foto_string">Adicionar foto da galeria</string>
     <string name="tirar_foto_string">Tirar foto com a câmera</string>
     <string name="finalizar">Finalizar</string>
+    <string name="reiniciar_aplicativo">Reiniciar aplicativo</string>
 
     <string-array name="tipos_imovel">
         <item>Casa</item>
