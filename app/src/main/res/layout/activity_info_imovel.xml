@@ -130,7 +130,7 @@
                 android:textSize="16sp" />
 
 
-            <TextView
+            <TextView android:id="@+id/conversar_dono"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="4dp"
 

@@ -26,6 +26,7 @@ object FirestoreImovelUtil {
                      vaga: Int = 0,
                      descricao: String = "",
                      uidDono: String = "",
+                     emailDono: String = "",
                      picturePath: String?) {
         val imovelFieldMap = mutableMapOf<String, Any>()
 
@@ -46,6 +47,7 @@ object FirestoreImovelUtil {
         imovelFieldMap["vaga"] = vaga
         imovelFieldMap["descricao"] = descricao
         imovelFieldMap["uidDono"] = uidDono
+        imovelFieldMap["emailDono"] = emailDono
         if(picturePath != null) imovelFieldMap["picturePath"] = picturePath
 
         imoveisCollectionReference.add(imovelFieldMap).addOnCompleteListener {task ->

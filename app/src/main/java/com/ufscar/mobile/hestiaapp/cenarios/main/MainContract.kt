@@ -19,8 +19,6 @@ interface MainContract {
         fun showPerfil()
         fun showMeusImoveis()
         fun hideMeusImoveis()
-        fun hidePreferencias()
-        fun showPreferencias()
         fun hideFavoritos()
         fun showFavoritos()
         fun showMessage(message: String)

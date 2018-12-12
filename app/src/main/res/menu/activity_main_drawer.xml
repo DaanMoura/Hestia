@@ -12,10 +12,7 @@
             android:id="@+id/nav_perfil"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/perfil" />
-        <item
-            android:id="@+id/nav_pref"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/prefer_ncias" />
+
         <item
             android:id="@+id/nav_list"
             android:icon="@drawable/ic_favorite"
@@ -28,10 +25,6 @@
 
     <item android:title="@string/suporte">
         <menu>
-            <item
-                android:id="@+id/nav_faq"
-                android:icon="@drawable/ic_help"
-                android:title="@string/faq" />
             <item
                 android:id="@+id/nav_contato"
                 android:icon="@drawable/ic_email"

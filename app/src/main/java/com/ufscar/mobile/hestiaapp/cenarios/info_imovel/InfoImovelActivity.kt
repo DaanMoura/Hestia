@@ -48,7 +48,18 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
                 Toast.makeText(this, "Impossível mostrar no mapa", Toast.LENGTH_SHORT).show()
             }
         }
-        //TODO: fazer ação "Conversar com o Dono"
+
+        conversar_dono.setOnClickListener {
+            val email = imovel?.emailDono
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:") // only email apps should handle this
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+                putExtra(Intent.EXTRA_SUBJECT, "[Hestia] Contato")
+            }
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            }
+        }
 
         fab_favorite.setOnClickListener {
             presenter.onFavorite(imovel, this)

@@ -20,7 +20,6 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
         if (FirebaseAuth.getInstance().currentUser == null) {
             view.hideMeusImoveis()
             view.hidePerfil()
-            view.hidePreferencias()
             view.hideFavoritos()
             view.showEntrar()
         } else {
@@ -30,7 +29,6 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
             view.hideEntrar()
             view.showPerfil()
             view.showMeusImoveis()
-            view.showPreferencias()
             view.showFavoritos()
         }
     }
@@ -47,7 +45,7 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
         if (FirebaseAuth.getInstance().currentUser == null) {
             val intent = AuthUI.getInstance().createSignInIntentBuilder()
                     .setAvailableProviders(signInProviders)
-                    .setLogo(R.drawable.ic_home) // TODO: Change this later
+                    .setLogo(R.drawable.ic_home)
                     .build()
             view.entrarSucces(intent)
         } else {
