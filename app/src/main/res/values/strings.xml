@@ -79,6 +79,7 @@
         <item>Outro</item>
     </string-array>
     <string name="title_activity_contato">ContatoActivity</string>
+    <string name="atual_moradores">Nº Atual de moradores</string>
 
 
 </resources>

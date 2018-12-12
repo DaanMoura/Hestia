@@ -44,10 +44,6 @@ class FotosCadastroFragment : Fragment() {
             listener?.onEscolherFoto()
         }
 
-        tirar_foto.setOnClickListener {
-            listener?.onTirarFoto()
-        }
-
         finalizar.setOnClickListener {
             listener?.onFinalizar(infoMap, enderecoMap)
         }
@@ -71,7 +67,6 @@ class FotosCadastroFragment : Fragment() {
 
     interface onFragmentInteractionListener {
         fun onEscolherFoto()
-        fun onTirarFoto()
         fun onFinalizar(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>)
     }
 }

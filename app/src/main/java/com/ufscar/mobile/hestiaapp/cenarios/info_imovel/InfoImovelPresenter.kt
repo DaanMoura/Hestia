@@ -1,11 +1,14 @@
 package com.ufscar.mobile.hestiaapp.cenarios.info_imovel
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.model.Imovel
 import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
 
 class InfoImovelPresenter(val view: InfoImovelContract.View): InfoImovelContract.Presenter {
+
     override fun onFavorite(imovel: Imovel?, context: Context) {
         if(imovel != null) {
             FirestoreUserUtil.getCurrentUser({user ->

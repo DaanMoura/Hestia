@@ -47,7 +47,7 @@ class MeusImoveisActivity : AppCompatActivity(), MeusImoveisContract.View {
         adapter.setOnClick { imovel, index ->
             val openInfo = Intent(this, InfoImovelActivity::class.java)
             openInfo.putExtra(EXTRA_IMOVEL, imovel)
-            openInfo.putExtra(EXTRA_SHOW_EDIT, true)
+            openInfo.putExtra(EXTRA_SHOW_EDIT, false)
             startActivityForResult(openInfo, REQUEST_INFO)
         }
     }

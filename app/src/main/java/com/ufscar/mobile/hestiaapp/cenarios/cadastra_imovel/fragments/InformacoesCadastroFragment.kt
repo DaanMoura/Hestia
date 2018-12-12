@@ -42,6 +42,7 @@ class InformacoesCadastroFragment : Fragment() {
             edtTitle.setText(argMap.getValue("title").toString())
             edtTipo.setText(argMap.getValue("tipo").toString())
             edtPreco.setText(argMap.getValue("preco").toString())
+            edtMoradoresAtual.setText(argMap.getValue("moradores_atual").toString())
             edtMoradores.setText(argMap.getValue("moradores").toString())
             edtQuartos.setText(argMap.getValue("quartos").toString())
             edtBanheiros.setText(argMap.getValue("banheiros").toString())
@@ -56,6 +57,10 @@ class InformacoesCadastroFragment : Fragment() {
                 infoMap["title"] = edtTitle.text ?: " "
                 infoMap["tipo"] = edtTipo.text ?: " "
                 infoMap["preco"] = edtPreco.text.toString().toInt()
+                if(!edtMoradoresAtual.text.isNullOrEmpty())
+                    infoMap["moradores_atual"] = edtMoradoresAtual.text.toString().toInt()
+                else
+                    infoMap["moradores_atual"] = 0
                 if(!edtMoradores.text.isNullOrEmpty())
                     infoMap["moradores"] = edtMoradores.text.toString().toInt()
                 else

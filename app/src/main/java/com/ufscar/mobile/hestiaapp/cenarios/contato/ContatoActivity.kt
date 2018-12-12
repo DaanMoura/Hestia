@@ -28,7 +28,6 @@ class ContatoActivity : AppCompatActivity() {
     }
 
     fun enviarEmail(email: String) {
-        Toast.makeText(this, email, Toast.LENGTH_SHORT).show()
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") // only email apps should handle this
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))

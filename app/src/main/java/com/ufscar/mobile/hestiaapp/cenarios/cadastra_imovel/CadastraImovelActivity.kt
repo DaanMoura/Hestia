@@ -99,11 +99,6 @@ class CadastraImovelActivity : AppCompatActivity(), CadastraImovelContract.View,
         }
     }
 
-    override fun onTirarFoto() {
-        //TODO: Falta implementar isso
-        Toast.makeText(this, "Tirar foto", Toast.LENGTH_SHORT).show()
-    }
-
     override fun onFinalizar(infoMap: HashMap<String,Any>, enderecoMap: HashMap<String, Any>) {
         if(::selectedImageBytes.isInitialized) {
             presenter.onInsertImovelWithPhoto(infoMap.getValue("title").toString(),
@@ -114,7 +109,7 @@ class CadastraImovelActivity : AppCompatActivity(), CadastraImovelContract.View,
                     enderecoMap.getValue("complemento").toString(),
                     enderecoMap.getValue("referencia").toString(),
                     infoMap.getValue("moradores").toString().toInt(),
-                    0,
+                    infoMap.getValue("moradores_atual").toString().toInt(),
                     infoMap.getValue("preco").toString().toInt(),
                     infoMap.getValue("quartos").toString().toInt(),
                     infoMap.getValue("banheiros").toString().toInt(),
