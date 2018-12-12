@@ -41,7 +41,7 @@ class CardAdapter(val context: Context, val imovelList: ArrayList<Imovel>) : Rec
     //Create a view holder
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(context: Context,imovel: Imovel, onClickListener: ((imovel: Imovel, index: Int) -> Unit)?) {
-            if(imovel.title != null) {
+            if(!imovel.title.isNullOrEmpty()) {
                 itemView.tvTitle.text = imovel.title
             } else {
                 itemView.tvTitle.text = imovel.tipo
@@ -49,7 +49,7 @@ class CardAdapter(val context: Context, val imovelList: ArrayList<Imovel>) : Rec
             itemView.tvMoradores.text = "Moradores: ${imovel.min}/${imovel.max}"
             itemView.tvInteressados.text = "Interessados: ${imovel.interessados}"
             itemView.tvPreco.text = "R$ ${imovel.preco},00"
-            itemView.tvComodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas, ${imovel.cozinhas} cozinhas"
+            itemView.tvComodos.text = formatarComodos(imovel)
             itemView.tvDesc.text = imovel.descricao
             itemView.checkInteressados as CheckBox
 
@@ -65,6 +65,37 @@ class CardAdapter(val context: Context, val imovelList: ArrayList<Imovel>) : Rec
                     onClickListener.invoke(imovel, adapterPosition)
                 }
             }
+        }
+
+        fun formatarComodos(imovel: Imovel): String {
+            var str = ""
+
+            if(imovel.quartos == 1)
+                str = str + "1 quarto"
+            else if(imovel.quartos > 1)
+                str = str + "${imovel.quartos} quartos"
+
+            if(imovel.banheiros == 1)
+                str = str + ", 1 banheiro"
+            else if(imovel.banheiros > 1)
+                str = str + ", ${imovel.banheiros} banheiros"
+
+            if(imovel.salas == 1)
+                str = str + ", 1 sala"
+            else if(imovel.salas > 1)
+                str = str + ", ${imovel.salas} salas"
+
+            if(imovel.cozinhas == 1)
+                str = str + ", 1 cozinha"
+            else if(imovel.cozinhas > 1)
+                str = str + ", ${imovel.cozinhas} cozinhas"
+
+            if(imovel.vaga == 1)
+                str = str + " e 1 vaga na garagem"
+            else if(imovel.vaga > 1)
+                str = str + " e ${imovel.vaga} vagas na garagem"
+
+            return str
         }
     }
 

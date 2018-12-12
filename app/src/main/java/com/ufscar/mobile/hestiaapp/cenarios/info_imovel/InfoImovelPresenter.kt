@@ -29,18 +29,19 @@ class InfoImovelPresenter(val view: InfoImovelContract.View): InfoImovelContract
 
     override fun onLoadFab(context: Context, showEdit: Boolean, imovel: Imovel?) {
 
-        if(showEdit)
-            view.showFabEdit()
-        else {
-            view.showFabFavorite()
-            FirestoreUserUtil.getCurrentUser({user ->
-                if(imovel?.id in user.favoritos) {
-                    view.fillFavorite()
-                } else {
-                    view.unfillFavorite()
-                }
-            }, context)
+        if(FirebaseAuth.getInstance().currentUser != null) {
+            if(showEdit)
+                view.showFabEdit()
+            else {
+                view.showFabFavorite()
+                FirestoreUserUtil.getCurrentUser({user ->
+                    if(imovel?.id in user.favoritos) {
+                        view.fillFavorite()
+                    } else {
+                        view.unfillFavorite()
+                    }
+                }, context)
+            }
         }
-
     }
 }

@@ -57,12 +57,30 @@ class InformacoesCadastroFragment : Fragment() {
                 infoMap["title"] = edtTitle.text ?: " "
                 infoMap["tipo"] = edtTipo.text ?: " "
                 infoMap["preco"] = edtPreco.text.toString().toInt()
-                infoMap["moradores"] = edtMoradores.text.toString().toInt()
-                infoMap["quartos"] = edtQuartos.text.toString().toInt()
-                infoMap["banheiros"] = edtBanheiros.text.toString().toInt()
-                infoMap["sala"] = edtSalas.text.toString().toInt()
-                infoMap["cozinhas"] = edtCozinhas.text.toString().toInt()
-                infoMap["vagas"] = edtVagas.text.toString().toInt()
+                if(!edtMoradores.text.isNullOrEmpty())
+                    infoMap["moradores"] = edtMoradores.text.toString().toInt()
+                else
+                    infoMap["moradores"] = 0
+                if(!edtQuartos.text.isNullOrEmpty())
+                    infoMap["quartos"] = edtQuartos.text.toString().toInt()
+                else
+                    infoMap["quartos"] = 0
+                if(!edtBanheiros.text.isNullOrEmpty())
+                    infoMap["banheiros"] = edtBanheiros.text.toString().toInt()
+                else
+                    infoMap["banheiros"] = 0
+                if(!edtSalas.text.isNullOrEmpty())
+                    infoMap["sala"] = edtSalas.text.toString().toInt()
+                else
+                    infoMap["sala"] = 0
+                if(!edtCozinhas.text.isNullOrEmpty())
+                    infoMap["cozinhas"] = edtCozinhas.text.toString().toInt()
+                else
+                    infoMap["cozinhas"] = 0
+                if(!edtVagas.text.isNullOrEmpty())
+                    infoMap["vagas"] = edtVagas.text.toString().toInt()
+                else
+                    infoMap["vagas"] = 0
                 val argMap = arguments?.getSerializable(ARG_ENDERECO_MAP) as HashMap<String, Any>?
                 listener?.onProsseguirEnderecoInteraction(infoMap, argMap)
             }
