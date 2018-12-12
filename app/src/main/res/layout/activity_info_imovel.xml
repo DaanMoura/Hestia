@@ -26,36 +26,19 @@
                 android:text="@string/default_card_title"
                 android:textColor="@color/primaryText"
                 android:textSize="40sp" />
-
-            <HorizontalScrollView
+            <TextView
+                android:id="@+id/info_tipo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/googlesans"
+                android:text="@string/default_card_title"
+                android:textColor="@color/primaryText"
+                android:textSize="24sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <!--Depois essas imagens serão substituidas
-                    por um recycler view-->
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_margin="8dp"
-                        android:background="@color/grayDark" />
-
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_margin="8dp"
-                        android:background="@color/colorPrimary" />
-
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_margin="8dp"
-                        android:background="@color/colorPrimaryLight" />
-                </LinearLayout>
-            </HorizontalScrollView>
+            <ImageView android:id="@+id/imageImovel"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/colorPrimaryLight"/>
 
             <TextView
                 android:id="@+id/info_price"
@@ -106,6 +89,15 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/info_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/default_short_description"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/info_comodos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,11 +108,11 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/info_desc"
+                android:id="@+id/info_referencia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/default_short_description"
+                android:text="@string/placeholder_ref"
                 android:textColor="@color/primaryText"
                 android:textSize="16sp" />
 

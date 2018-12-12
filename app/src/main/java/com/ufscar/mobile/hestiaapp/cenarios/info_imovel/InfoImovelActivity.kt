@@ -8,11 +8,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.ufscar.mobile.hestiaapp.cenarios.main.MainActivity
 import com.ufscar.mobile.hestiaapp.R
+import com.ufscar.mobile.hestiaapp.cenarios.main.MainActivity
 import com.ufscar.mobile.hestiaapp.model.Imovel
-import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
+import com.ufscar.mobile.hestiaapp.util.GlideApp
+import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_info_imovel.*
 
 class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
@@ -41,7 +41,7 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
 
         info_end_text.setOnClickListener {
             val showOnMap = Intent(Intent.ACTION_VIEW)
-            showOnMap.data = Uri.parse("geo:0,0?q=${imovel?.endereco}")
+            showOnMap.data = Uri.parse("geo:0,0?q=${imovel?.rua} ${imovel?.numero} ${imovel?.cidade}")
             if(showOnMap.resolveActivity(packageManager) != null) {
                 startActivity(showOnMap)
             } else {
@@ -57,13 +57,31 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
 
     private fun loadInfo(imovel: Imovel?) {
         if (imovel != null) {
-            info_title.text = imovel.title
+            if(!imovel.title.isNullOrEmpty()) {
+                info_title.text = imovel.title
+                info_tipo.text = imovel.tipo
+            } else {
+                info_tipo.visibility = View.INVISIBLE
+                info_title.text = imovel.tipo
+            }
             info_price.text = "R$ ${imovel.preco},00"
             info_moradores.text = "Moradores: ${imovel.min}/${imovel.max}"
             info_interessados.text = "Interessados: ${imovel.interessados}"
-            info_comodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas"
+            info_comodos.text = "${imovel.quartos} quartos, ${imovel.banheiros} banheiros, ${imovel.salas} salas, ${imovel.cozinhas} cozinhas"
             info_desc.text = imovel.descricao
-            info_end_text.text = imovel.endereco
+            if(!imovel.referencia.isNullOrEmpty()) {
+                info_referencia.text = "Ponto de referência: ${imovel.referencia}"
+            } else {
+                info_referencia.visibility = View.INVISIBLE
+            }
+            info_end_text.text = "${imovel.rua}, nº ${imovel.numero} ${imovel.complemento} - ${imovel.cidade}"
+
+            if(imovel.picturePath != null) {
+                GlideApp.with(this)
+                        .load(StorageUtil.pathToReference(imovel.picturePath))
+                        .centerCrop()
+                        .into(imageImovel)
+            }
         }
     }
 

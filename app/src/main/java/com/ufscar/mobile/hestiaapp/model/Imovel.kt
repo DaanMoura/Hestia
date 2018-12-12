@@ -3,7 +3,13 @@ package com.ufscar.mobile.hestiaapp.model
 import android.graphics.Bitmap
 import java.io.Serializable
 
-data class Imovel(val title: String,
+data class Imovel(val title: String?,
+                  val tipo: String,
+                  val cidade: String,
+                  val rua: String,
+                  val numero: Int,
+                  val complemento: String?,
+                  val referencia: String?,
                   val max: Int,
                   val min: Int,
                   val interessados: Int,
@@ -11,14 +17,15 @@ data class Imovel(val title: String,
                   val quartos: Int,
                   val banheiros: Int,
                   val salas: Int,
+                  val cozinhas: Int,
                   val vaga: Int,
                   val descricao: String,
-                  val endereco: String,
                   val uidDono: String,
-                  val bmFoto: Bitmap?,
+                  val picturePath: String?,
                   val id: String) : Serializable {
-    constructor(): this("",0,0,0,0,
-            0,0,0,0,"","","", null, "")
+    constructor(): this("","","","", 0,"","",
+            0,0,0,0,0,0,0,0,0,
+            "","",null,"")
 }
 
 
