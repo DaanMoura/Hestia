@@ -63,7 +63,6 @@
             <EditText android:id="@+id/edtMoradores"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/zero"
                 android:hint="@string/_1"
                 android:inputType="number"
                 tools:ignore="Autofill" />
@@ -83,7 +82,6 @@
             <EditText android:id="@+id/edtVagas"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/zero"
                 android:hint="@string/_1"
                 android:inputType="number"
                 tools:ignore="Autofill"/>
@@ -104,7 +102,6 @@
             <EditText android:id="@+id/edtQuartos"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/zero"
                 android:hint="@string/_1"
                 android:inputType="number"
                 tools:ignore="Autofill"/>
@@ -125,7 +122,6 @@
             <EditText android:id="@+id/edtBanheiros"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/zero"
                 android:hint="@string/_1"
                 android:inputType="number"
                 tools:ignore="Autofill"/>
@@ -146,7 +142,6 @@
             <EditText android:id="@+id/edtSalas"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/zero"
                 android:hint="@string/_1"
                 android:inputType="number"
                 tools:ignore="Autofill"/>
@@ -168,7 +163,6 @@
                 android:id="@+id/edtCozinhas"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/zero"
                 android:hint="@string/_1"
                 android:inputType="number"
                 tools:ignore="Autofill"/>
