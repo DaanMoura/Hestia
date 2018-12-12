@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".cenarios.contato.ContatoActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/googlesans"
+        android:textColor="@color/primaryText"
+        android:text="Equipe" />
+
+    <TextView android:id="@+id/email_daniel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:text="daniel.lucio.moura@gmail.com"/>
+
+    <TextView android:id="@+id/email_lucas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:text="nlucashtg@gmail.com"/>
+
+    <TextView android:id="@+id/email_pedro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:text="pedroadorno99@gmail.com"/>
+
+    <TextView android:id="@+id/dica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:text="Clique no email pra entrrar em contato!"/>
+
+</LinearLayout>

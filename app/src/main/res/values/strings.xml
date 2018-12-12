@@ -78,6 +78,7 @@
         <item>Kitinete</item>
         <item>Outro</item>
     </string-array>
+    <string name="title_activity_contato">ContatoActivity</string>
 
 
 </resources>

@@ -19,6 +19,7 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.adapter.CardAdapter
+import com.ufscar.mobile.hestiaapp.cenarios.contato.ContatoActivity
 import com.ufscar.mobile.hestiaapp.cenarios.favoritos.FavoritosActivity
 import com.ufscar.mobile.hestiaapp.cenarios.info_imovel.InfoImovelActivity
 import com.ufscar.mobile.hestiaapp.cenarios.meus_imoveis.MeusImoveisActivity
@@ -174,14 +175,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.menu.findItem(R.id.nav_imoveis).setVisible(false)
     }
 
-    override fun hidePreferencias() {
-        nav_view.menu.findItem(R.id.nav_pref).setVisible(false)
-    }
-
-    override fun showPreferencias() {
-        nav_view.menu.findItem(R.id.nav_pref).setVisible(true)
-    }
-
     override fun hideFavoritos() {
         nav_view.menu.findItem(R.id.nav_list).setVisible(false)
     }
@@ -209,24 +202,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 presenter.onImoveis()
             }
 
-            //TODO: make the pref forms and put intent below
-            R.id.nav_pref -> {
-                Toast.makeText(this, "Preferências", Toast.LENGTH_SHORT).show()
-            }
-
-            //TODO: make "Minha Lista" and put intent below
             R.id.nav_list -> {
                 startActivity(intentFor<FavoritosActivity>())
             }
 
-            //TODO: make FAQ and put intent below
-            R.id.nav_faq -> {
-                Toast.makeText(this, "FAQ", Toast.LENGTH_SHORT).show()
-            }
-
-            //TODO: make "Contato" and put intent below
             R.id.nav_contato -> {
-                Toast.makeText(this, "Contato", Toast.LENGTH_SHORT).show()
+                startActivity(intentFor<ContatoActivity>())
             }
         }
 
