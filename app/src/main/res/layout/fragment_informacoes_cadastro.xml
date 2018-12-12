@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_titulo"
-            android:inputType="textPostalAddress"
+            android:inputType="textCapWords"
             tools:ignore="Autofill" />
 
         <!--TODO: Trocar o EditText abaixo para Spinner-->
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/tipo_do_imovel"
-            android:inputType="textPostalAddress"
+            android:inputType="textCapWords"
             tools:ignore="Autofill" />
 
         <EditText
