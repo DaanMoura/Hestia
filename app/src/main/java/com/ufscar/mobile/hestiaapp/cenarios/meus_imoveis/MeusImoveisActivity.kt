@@ -49,7 +49,7 @@ class MeusImoveisActivity : AppCompatActivity(), MeusImoveisContract.View {
         val recyclerView = rvCard as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         //Setting adapter
-        val adapter = CardAdapter(imoveis)
+        val adapter = CardAdapter(this, imoveis)
         recyclerView.adapter = adapter
         adapter.setOnClick { imovel, index ->
             val openInfo = Intent(this, InfoImovelActivity::class.java)

@@ -35,35 +35,10 @@
                 android:textColor="@color/primaryText"
                 android:textSize="24sp" />
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <!--Depois essas imagens serão substituidas
-                    por um recycler view-->
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_margin="8dp"
-                        android:background="@color/grayDark" />
-
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_margin="8dp"
-                        android:background="@color/colorPrimary" />
-
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_margin="8dp"
-                        android:background="@color/colorPrimaryLight" />
-                </LinearLayout>
-            </HorizontalScrollView>
+            <ImageView android:id="@+id/imageImovel"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/colorPrimaryLight"/>
 
             <TextView
                 android:id="@+id/info_price"

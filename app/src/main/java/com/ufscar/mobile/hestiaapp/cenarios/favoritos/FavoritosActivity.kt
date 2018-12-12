@@ -40,7 +40,7 @@ class FavoritosActivity : AppCompatActivity(), FavoritosContract.View {
         imoveis = list
         //Instantiating RecyclerView
         //Setting adapter
-        val adapter = CardAdapter(imoveis)
+        val adapter = CardAdapter(this, imoveis)
         adapter.setOnClick { imovel, index ->
             val openInfo = Intent(this, InfoImovelActivity::class.java)
             openInfo.putExtra(EXTRA_IMOVEL, imovel)

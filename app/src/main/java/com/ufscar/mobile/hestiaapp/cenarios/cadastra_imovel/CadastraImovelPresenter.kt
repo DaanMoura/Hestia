@@ -1,6 +1,5 @@
 package com.ufscar.mobile.hestiaapp.cenarios.cadastra_imovel
 
-import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.ufscar.mobile.hestiaapp.util.FirestoreImovelUtil
 import com.ufscar.mobile.hestiaapp.util.StorageUtil

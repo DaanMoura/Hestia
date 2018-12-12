@@ -66,6 +66,9 @@
     <string name="voltar">voltar</string>
     <string name="descricaoTitle">Descrição</string>
     <string name="placeholder_ref">Ponto de Referência</string>
+    <string name="add_foto_string">Adicionar foto da galeria</string>
+    <string name="tirar_foto_string">Tirar foto com a câmera</string>
+    <string name="finalizar">Finalizar</string>
 
     <string-array name="tipos_imovel">
         <item>Casa</item>

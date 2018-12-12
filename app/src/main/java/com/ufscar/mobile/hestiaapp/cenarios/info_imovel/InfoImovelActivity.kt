@@ -8,11 +8,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.ufscar.mobile.hestiaapp.cenarios.main.MainActivity
 import com.ufscar.mobile.hestiaapp.R
+import com.ufscar.mobile.hestiaapp.cenarios.main.MainActivity
 import com.ufscar.mobile.hestiaapp.model.Imovel
-import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
+import com.ufscar.mobile.hestiaapp.util.GlideApp
+import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_info_imovel.*
 
 class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
@@ -75,6 +75,13 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
                 info_referencia.visibility = View.INVISIBLE
             }
             info_end_text.text = "${imovel.rua}, nº ${imovel.numero} ${imovel.complemento} - ${imovel.cidade}"
+
+            if(imovel.picturePath != null) {
+                GlideApp.with(this)
+                        .load(StorageUtil.pathToReference(imovel.picturePath))
+                        .centerCrop()
+                        .into(imageImovel)
+            }
         }
     }
 

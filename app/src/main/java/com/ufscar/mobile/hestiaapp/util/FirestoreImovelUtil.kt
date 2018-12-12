@@ -32,7 +32,8 @@ object FirestoreImovelUtil {
                      cozinhas: Int = 0,
                      vaga: Int = 0,
                      descricao: String = "",
-                     uidDono: String = "") {
+                     uidDono: String = "",
+                     picturePath: String?) {
         val imovelFieldMap = mutableMapOf<String, Any>()
 
         imovelFieldMap["title"] = title
@@ -52,6 +53,7 @@ object FirestoreImovelUtil {
         imovelFieldMap["vaga"] = vaga
         imovelFieldMap["descricao"] = descricao
         imovelFieldMap["uidDono"] = uidDono
+        if(picturePath != null) imovelFieldMap["picturePath"] = picturePath
 
         imoveisCollectionReference.add(imovelFieldMap).addOnCompleteListener {task ->
             val result = task.result
@@ -65,17 +67,6 @@ object FirestoreImovelUtil {
                 if(document.id == id) {
                     val imovel = document.toObject(Imovel::class.java)
                     document.reference.update("interessados", imovel.interessados + increment)
-                }
-            }
-        }
-    }
-
-    fun updateImage(id: String, bmFoto: Bitmap) {
-        imoveisCollectionReference.get().addOnCompleteListener { task ->
-            for(document in task.result!!) {
-                if(document.id == id) {
-                    val imovel = document.toObject(Imovel::class.java)
-                    //TODO: Adicionar foto
                 }
             }
         }

@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val recyclerView = rvCard as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         //Setting adapter
-        val adapter = CardAdapter(imoveis)
+        val adapter = CardAdapter(this,imoveis)
         adapter.setOnClick { imovel, index ->
             val openInfo = Intent(this, InfoImovelActivity::class.java)
             openInfo.putExtra(EXTRA_IMOVEL, imovel)
