@@ -120,7 +120,6 @@ class InfoImovelActivity : AppCompatActivity(), InfoImovelContract.View {
         super.onBackPressed()
 
         val volta = Intent(this, MainActivity::class.java)
-//        val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom)
         setResult(Activity.RESULT_OK, volta)
         finish()
     }

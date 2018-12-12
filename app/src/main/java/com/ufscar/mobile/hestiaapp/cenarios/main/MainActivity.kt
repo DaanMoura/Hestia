@@ -96,8 +96,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val openInfo = Intent(this, InfoImovelActivity::class.java)
             openInfo.putExtra(EXTRA_IMOVEL, imovel)
             openInfo.putExtra(EXTRA_SHOW_EDIT, false)
-            //Teste de animação (Apenas para >= Android 5.0)
-//            val options = ActivityOptions.makeCustomAnimation(this, R.anim.abc_fade_in, R.anim.abc_fade_out)
             startActivityForResult(openInfo, REQUEST_INFO)
         }
         recyclerView.adapter = adapter

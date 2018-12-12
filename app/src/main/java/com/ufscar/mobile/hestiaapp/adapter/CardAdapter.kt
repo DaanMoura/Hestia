@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.model.Imovel
 import com.ufscar.mobile.hestiaapp.util.GlideApp
@@ -51,7 +50,6 @@ class CardAdapter(val context: Context, val imovelList: ArrayList<Imovel>) : Rec
             itemView.tvPreco.text = "R$ ${imovel.preco},00"
             itemView.tvComodos.text = formatarComodos(imovel)
             itemView.tvDesc.text = imovel.descricao
-            itemView.checkInteressados as CheckBox
 
             if(imovel.picturePath != null) {
                 GlideApp.with(context)

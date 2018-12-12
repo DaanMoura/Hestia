@@ -1,7 +1,5 @@
 package com.ufscar.mobile.hestiaapp.cenarios.cadastra_imovel
 
-import android.content.Context
-
 interface CadastraImovelContract {
 
     interface View {

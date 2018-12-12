@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.cenarios.main.MainActivity
+import com.ufscar.mobile.hestiaapp.util.GlideApp
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
 import kotlinx.android.synthetic.main.activity_perfil.*
 import org.jetbrains.anko.act
@@ -16,15 +17,12 @@ import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import java.io.ByteArrayOutputStream
-import com.bumptech.glide.Glide
-import com.ufscar.mobile.hestiaapp.util.GlideApp
 
 class PerfilActivity : AppCompatActivity(), PerfilContract.View {
 
     private val RC_SELECT_IMAGE = 2
     private lateinit var selectedImageBytes: ByteArray
     private var pictureJustChanged = false
-    var atual: Boolean = false
 
     val presenter: PerfilContract.Presenter = PerfilPresenter(this)
 
@@ -40,7 +38,6 @@ class PerfilActivity : AppCompatActivity(), PerfilContract.View {
 
         //Saving
         btnSave.setOnClickListener {
-            //FIXME: nao carrega direito na outra activity
             if (::selectedImageBytes.isInitialized) {
                 presenter.onSaveWithPhoto(this, selectedImageBytes, editNome.text.toString(),
                         editBio.text.toString())
@@ -103,9 +100,6 @@ class PerfilActivity : AppCompatActivity(), PerfilContract.View {
         progress_bar.visibility = View.VISIBLE
     }
 
-    override fun setUploadProgress(progress: Int) {
-        progress_bar.progress = progress
-    }
 
     override fun logoutSucces() {
         startActivity(intentFor<MainActivity>().newTask().clearTask())

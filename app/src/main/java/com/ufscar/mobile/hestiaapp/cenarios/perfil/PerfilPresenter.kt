@@ -3,11 +3,8 @@ package com.ufscar.mobile.hestiaapp.cenarios.perfil
 import android.content.Context
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
-import com.ufscar.mobile.hestiaapp.R
 import com.ufscar.mobile.hestiaapp.util.FirestoreUserUtil
-import com.ufscar.mobile.hestiaapp.util.GlideApp
 import com.ufscar.mobile.hestiaapp.util.StorageUtil
-import kotlinx.android.synthetic.main.activity_perfil.*
 
 
 class PerfilPresenter(val view: PerfilContract.View): PerfilContract.Presenter {
@@ -21,16 +18,12 @@ class PerfilPresenter(val view: PerfilContract.View): PerfilContract.Presenter {
 
     override fun onSaveWithPhoto(context: Context, imageBytes: ByteArray, nome: String, bio: String) {
         view.showProgressBar()
-        StorageUtil.uploadProfilePhoto(imageBytes,
-                { imagePath ->
-                    FirestoreUserUtil.updateCurrentUser(nome,
-                            FirebaseAuth.getInstance().currentUser?.email ?: "",
-                            bio, imagePath)
-                    view.saveSucces()
-                },
-                { progress ->
-                    view.setUploadProgress(progress)
-                }, context)
+        StorageUtil.uploadProfilePhoto(imageBytes) { imagePath ->
+            FirestoreUserUtil.updateCurrentUser(nome,
+                    FirebaseAuth.getInstance().currentUser?.email ?: "",
+                    bio, imagePath)
+            view.saveSucces()
+        }
     }
 
     override fun onSaveWithoutPhoto(nome: String, bio: String) {
